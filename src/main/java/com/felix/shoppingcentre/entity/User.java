@@ -15,5 +15,5 @@ public class User extends BaseEntity {
     private String email;
     private Integer gender;
     private String avatar;
-    private Integer isDelete;
+    private Integer delete;
 }
