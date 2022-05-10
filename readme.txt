@@ -25,8 +25,10 @@ html + css + jquery + jpa + mybatis + mysql
     self-defined exception
     add bootstrap3 and images
 4.2022-05-09
-4.1 Delevop webservice demo (refer to Develop webservice with springboot.md)
+4.1 Delevop webservice demo refre to Develop_webservice_with_springboot.pdf
 4.2 Modify pom.xml
 4.3 Register.html
 4.4 Adjust password generation policy
 
+5.2022-05-10
+5.1 Use postman to test webservice, refer to Develop_webservice_with_springboot.pdf
