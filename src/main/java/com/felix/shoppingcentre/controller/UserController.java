@@ -12,13 +12,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
     private IUserService userService;
 
-    @PostMapping(value = "register")
+    /**
+     * when register a new user, save the log see {@com.felix.shoppingcentre.aop.aspect.UserLogAspect}
+     * @param user
+     * @return
+     */
+    @PostMapping(value = "/register")
     @UserLoginAnnotation
     public JsonResult<Void> register(User user) {
         JsonResult<Void> result = new JsonResult<>(ConstantUtils.SUCCESS);

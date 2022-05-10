@@ -5,7 +5,7 @@
 <mapper namespace="com.felix.shoppingcentre.mapper.UserMapper">
     <resultMap id="UserMap" type="com.felix.shoppingcentre.entity.User">
         <id column="uid" property="uid"></id>
-        <result column="is_delete" property="isDelete"/>
+        <result column="is_delete" property="delete"/>
         <result column="created_user" property="createdUser"/>
         <result column="created_time" property="createdTime"/>
         <result column="modified_user" property="modifiedUser"/>
@@ -19,7 +19,7 @@
             insert into t_user(username, password, salt, phone, email,
             gender, avatar, is_delete, created_user, created_time, modified_user, modified_time)
             values (#{username}, #{password}, #{salt}, #{phone}, #{email},
-             #{gender}, #{avatar}, #{isDelete}, #{createdUser}, #{createdTime}, #{modifiedUser}, #{modifiedTime})
+             #{gender}, #{avatar}, #{delete}, #{createdUser}, #{createdTime}, #{modifiedUser}, #{modifiedTime})
         ]]>
     </insert>
 

@@ -26,11 +26,18 @@ public final class PasswordUtils {
      * @param salt
      * @return
      */
-    public static String encode(String rawPass, String salt) {
-        return new PasswordEncoder(salt).encodePassword(rawPass);
+    public static String encode(String rawPass, String ...salt) {
+        return new PasswordEncoder(salt[0]).encodePassword(rawPass);
     }
 
     public static String getSalt() {
         return UUID.randomUUID().toString().replaceAll("-", "").substring(0, 20);
+    }
+
+    public static void main(String[] args) {
+        String rawPassword = "aaaa";
+        String salt = "f10150b2da944411b415";
+        String password = new PasswordEncoder(salt).encodePassword(rawPassword);
+        System.err.println(password);
     }
 }

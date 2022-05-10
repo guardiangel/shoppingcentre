@@ -1,3 +1,5 @@
+html + css + jquery + jpa + mybatis + mysql
+
 1. When share the project to gitHub, there is the exception:
     git@github.com: Permission denied (publickey)
     1.1 open git bash, run command to verify username and email:
@@ -25,4 +27,6 @@
 4.2022-05-09
 4.1 Delevop webservice demo (refer to Develop webservice with springboot.md)
 4.2 Modify pom.xml
+4.3 Register.html
+4.4 Adjust password generation policy
 

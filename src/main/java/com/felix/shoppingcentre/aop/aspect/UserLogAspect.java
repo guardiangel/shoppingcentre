@@ -20,7 +20,7 @@ import java.time.Instant;
 @Component
 @Aspect
 @Slf4j
-public class UserLogAspect<T> {
+public class UserLogAspect {
 
     @Pointcut("@annotation(com.felix.shoppingcentre.aop.anotation.UserLoginAnnotation)")
     public void logPointCut() {

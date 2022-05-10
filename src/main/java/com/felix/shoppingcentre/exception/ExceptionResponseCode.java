@@ -10,6 +10,7 @@ public enum ExceptionResponseCode implements ResponseCodeInterface {
 
     USER_NOT_FOUND(50001, "user not found"),
     USER_REPEAT(50002, "user exists in the database"),
+    PASSWORD_ERROR(50003, "password doesn't match the existing one"),
     UNKNOW_ERROR(99999, "unknown exception, please contact administrator"),
     ;
 

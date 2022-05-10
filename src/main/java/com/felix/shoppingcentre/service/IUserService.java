@@ -7,4 +7,6 @@ import com.felix.shoppingcentre.entity.User;
  */
 public interface IUserService {
     void register(User user);
+
+    User login(String username, String password);
 }
