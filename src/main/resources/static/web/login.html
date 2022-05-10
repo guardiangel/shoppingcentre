@@ -17,7 +17,9 @@
         <link rel="stylesheet" type="text/css" href="../css/index.css"/>
         <link rel="stylesheet" type="text/css" href="../css/layout.css"/>
         <link rel="stylesheet" type="text/css" href="../css/footer.css"/>
-        <link rel="stylesheet" type="text/css" href="../css/reg.css"/>
+        <link rel="stylesheet" type="text/css" href="../css/login.css"/>
+        <script type="text/javascript"  src="../bootstrap3/js/jquery.cookie.js" charset="utf-8"></script>
+        <script type="text/javascript" src="../js/autologin.js"></script>
     </head>
     <body>
         <header class="header">
@@ -26,10 +28,10 @@
         </header>
 
         <div class="container mycontent text-left">
-            <div class="registerDiv">
-                <p>Sign up</p>
+            <div class="loginDiv">
+                <p>Login</p>
                 <!--role="form" uses for disabled people to recognize this is a form-->
-                <form id="form-reg" class="form-horizontal" role="form">
+                <form id="form-login" action="index.html" class="form-horizontal" role="form">
                     <!--username-->
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="username">username:</label>
@@ -49,18 +51,20 @@
 
                     <!--confirm password-->
                     <div class="form-group">
-                        <label class="col-md-3 control-label" for="confirmPassord">confirm password:</label>
-                        <div class="col-md-8">
-                            <input id="confirmPassord" name="confirmPassord" type="password"
-                                   class="form-control" placeholder="please input password again"/>
+                        <div class="col-md-offset-3 col-md-6">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="auto"/>auto login
+                                </label>
+                            </div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-md-3 control-label" for="btn-reg"></label>
+                        <label class="col-md-3 control-label" for="btn-login"></label>
                         <div class="col-md-8">
-                            <input id="btn-reg" class="btn btn-primary" type="button" value="signup" />
-                            <span class="pull-right"><middle>have account already?</middle><a href="login.html">login</a></span>
+                            <input id="btn-login" class="btn btn-primary" type="button" value="login" />
+                            <span class="pull-right"><middle>still no account?</middle><a href="register.html">register</a></span>
                         </div>
                     </div>
 
@@ -106,19 +110,18 @@
 </html>
 <script type="text/javascript">
 
-    $("#btn-reg").click(function(){
-        console.log($("#form-reg").serialize());
+    $("#btn-login").click(function(){
         $.ajax({
-            url:"/user/register",
+            url:"/user/login",
             type:"POST",
-            data:$("#form-reg").serialize(),
+            data:$("#form-login").serialize(),
             dataType:"json",
             success:function(res) {
                 if(res.state === 200) {
-                    alert("register success");
-                    location.href="login.html";
+                    alert("login success");
+                    location.href="/index.html";
                 } else {
-                    alert("register failed, the reason is " + res.message);
+                    alert("login failed, the reason is " + res.message);
                 }
             }
         });

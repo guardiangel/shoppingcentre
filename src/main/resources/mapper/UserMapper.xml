@@ -29,4 +29,21 @@
         ]]>
     </select>
 
+    <select id="findByUid" resultMap="UserMap">
+        <![CDATA[
+        select * from t_user where uid=#{uid}
+        ]]>
+    </select>
+
+    <update id="updatePassword" parameterType="com.felix.shoppingcentre.entity.User">
+        <![CDATA[
+        update t_user
+        set
+        password=#{password},
+        modified_user=#{modifiedUser},
+        modified_time=#{modifiedTime}
+        where uid=#{uid}
+        ]]>
+    </update>
+
 </mapper>

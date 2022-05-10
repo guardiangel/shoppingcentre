@@ -1,6 +1,8 @@
 package com.felix.shoppingcentre.service.impl;
 
+import com.felix.shoppingcentre.entity.BaseEntity;
 import com.felix.shoppingcentre.entity.User;
+import com.felix.shoppingcentre.entity.UserJpaEntity;
 import com.felix.shoppingcentre.exception.ExceptionResponseCode;
 import com.felix.shoppingcentre.exception.ServiceException;
 import com.felix.shoppingcentre.mapper.UserMapper;
@@ -8,11 +10,14 @@ import com.felix.shoppingcentre.repository.UserRepository;
 import com.felix.shoppingcentre.service.IUserService;
 import com.felix.shoppingcentre.utils.ConstantUtils;
 import com.felix.shoppingcentre.utils.PasswordUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class UserService implements IUserService {
@@ -27,7 +32,6 @@ public class UserService implements IUserService {
      * @param user
      */
     @Override
-
     @Transactional
     public void register(User user) {
         String username = user.getUsername();
@@ -59,7 +63,7 @@ public class UserService implements IUserService {
     public User login(String username, String password) {
 
         User existUser = userMapper.findByUsername(username);
-        if (existUser == null ||existUser.getDelete() == ConstantUtils.USER_DELETED) {
+        if (ObjectUtils.isEmpty(existUser) || existUser.getDelete() == ConstantUtils.USER_DELETED) {
             throw new ServiceException(ExceptionResponseCode.USER_NOT_FOUND);
         }
 
@@ -69,7 +73,6 @@ public class UserService implements IUserService {
         }
 
         User user = new User();
-
         user.setUid(existUser.getUid());
         user.setUsername(existUser.getUsername());
         user.setAvatar(existUser.getAvatar());
@@ -78,13 +81,55 @@ public class UserService implements IUserService {
     }
 
     /**
-     * encrypt password
-     * @param password
-     *  password
-     * @return
-     *  encrypted password
+     * use jpa update password
+     * @param uid
+     * @param username
+     * @param originalPassword
+     * @param newPassword
      */
-    private String getMd5Password(String password, String ...salt) {
+    @Override
+    public void updatePassword(Integer uid, String username,
+                                  String originalPassword, String newPassword) {
+
+        //User existUser = userMapper.findByUid(uid);
+        UserJpaEntity existUserJpaEntity = userRepository.findById(uid).get();
+
+        if (ObjectUtils.isEmpty(existUserJpaEntity) || existUserJpaEntity.getDelete() == ConstantUtils.USER_DELETED) {
+            throw new ServiceException(ExceptionResponseCode.USER_NOT_FOUND);
+        }
+
+        String oldMd5Password = getMd5Password(originalPassword, existUserJpaEntity.getSalt());
+        if (!oldMd5Password.equals(existUserJpaEntity.getPassword())) {
+            throw new ServiceException(ExceptionResponseCode.PASSWORD_INPUT_WRONG);
+        }
+
+        String newMd5Password = getMd5Password(newPassword, existUserJpaEntity.getSalt());
+
+        if (newMd5Password.equals(existUserJpaEntity.getPassword())) {
+            throw new ServiceException(ExceptionResponseCode.PASSWORD_EQUAL_ORIGINAL);
+        }
+
+        UserJpaEntity userJpa = new UserJpaEntity();
+        BeanUtils.copyProperties(existUserJpaEntity, userJpa);
+
+        userJpa.setPassword(newMd5Password);
+        userJpa.setModifiedTime(new Date());
+        userJpa.setModifiedUser(username);
+
+        UserJpaEntity newUserJpa = userRepository.save(userJpa);
+        if (ObjectUtils.isEmpty(newUserJpa)) {
+            throw new ServiceException(ExceptionResponseCode.UNKNOW_ERROR);
+        }
+
+    }
+
+    /**
+     * encrypt password
+     *
+     * @param password password
+     * @return encrypted password
+     */
+    private String getMd5Password(String password, String... salt) {
         return PasswordUtils.encode(password, salt[0]);
     }
 }
