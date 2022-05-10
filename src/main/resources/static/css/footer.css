@@ -1,0 +1,23 @@
+.rights .fa {
+ 	font-size: 30px;
+ 	color: #667799;
+ }
+ img {
+ 	margin: 1px;
+ }
+ .callus a {
+ 	font-size: 12px;
+ 	text-decoration: none;
+ 	color: #666666;
+ }
+ .bottom {
+ 	margin: 10px;
+ }
+ .rights {
+ 	width: 100%;
+ 	padding: 50px;
+ 	background-color: #F2F2F2;
+ }
+ .beforeBottom {
+ 	padding-top: 30px;
+ }

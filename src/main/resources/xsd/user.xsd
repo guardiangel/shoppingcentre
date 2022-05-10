@@ -1,0 +1,36 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://tutorial.spring.boot/soap/produce/user"
+           targetNamespace="http://tutorial.spring.boot/soap/produce/user"
+           elementFormDefault="qualified">
+    <xs:complexType name="User">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="birth" type="xs:date"/>
+            <xs:element name="gender" type="tns:Gender"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="Gender">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Male"/>
+            <xs:enumeration value="Female"/>
+            <xs:enumeration value="Unknown"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="UserRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="UserResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="user" type="tns:User"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

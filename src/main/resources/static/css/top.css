@@ -1,0 +1,30 @@
+.header{
+	padding: 20px 60px;
+}
+.top-item a{
+	color: white
+	line-height: 40px;
+}
+.top-item li{
+	width: 100px;
+	text-align: center;
+}
+.top-item .li-split {
+	width: 10px;
+}
+#search {
+	width: 300px;
+}
+.top-nav{
+	background-color:snow;
+	height: 50px;
+	padding-top: 6px;
+	margin-bottom: 20px;
+}
+#top-dropdown-btn {
+	color: white;
+}
+.top-dropdown-ul li {
+	width: 100%;
+}
+

@@ -8,10 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * http utils
  */
-public final class HttpContextUtils {
+public class HttpContextUtils {
 
     /**
      * get http request
+     *
      * @return
      */
     public static final HttpServletRequest getHttpServletRequest() {

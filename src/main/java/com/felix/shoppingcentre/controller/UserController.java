@@ -1,5 +1,6 @@
 package com.felix.shoppingcentre.controller;
 
+import com.felix.shoppingcentre.aop.anotation.UserLoginAnnotation;
 import com.felix.shoppingcentre.entity.User;
 import com.felix.shoppingcentre.exception.ServiceException;
 import com.felix.shoppingcentre.service.IUserService;
@@ -10,8 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.SQLException;
-
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -20,6 +19,7 @@ public class UserController {
     private IUserService userService;
 
     @PostMapping(value = "register")
+    @UserLoginAnnotation
     public JsonResult<Void> register(User user) {
         JsonResult<Void> result = new JsonResult<>(ConstantUtils.SUCCESS);
         try {

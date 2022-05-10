@@ -29,7 +29,7 @@ public class UserService implements IUserService {
      * @param user
      */
     @Override
-    @UserLoginAnnotation
+
     @Transactional
     public void register(User user) {
         String username = user.getUsername();
