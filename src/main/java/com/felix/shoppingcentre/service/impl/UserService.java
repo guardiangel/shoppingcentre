@@ -91,11 +91,16 @@ public class UserService implements IUserService {
     public void updatePassword(Integer uid, String username,
                                   String originalPassword, String newPassword) {
 
-        //User existUser = userMapper.findByUid(uid);
-        UserJpaEntity existUserJpaEntity = userRepository.findById(uid).get();
+        Optional<UserJpaEntity> existUserJpaEntityOptional = userRepository.findById(uid);
 
-        if (ObjectUtils.isEmpty(existUserJpaEntity) || existUserJpaEntity.getDelete() == ConstantUtils.USER_DELETED) {
+        if (!existUserJpaEntityOptional.isPresent()) {
             throw new ServiceException(ExceptionResponseCode.USER_NOT_FOUND);
+        }
+
+        UserJpaEntity existUserJpaEntity = existUserJpaEntityOptional.get();
+
+        if (existUserJpaEntity.getDelete() == ConstantUtils.USER_DELETED) {
+            throw new ServiceException(ExceptionResponseCode.USER_DELETED);
         }
 
         String oldMd5Password = getMd5Password(originalPassword, existUserJpaEntity.getSalt());
