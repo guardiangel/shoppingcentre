@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 @RestController
 @RequestMapping("/user")
 @Slf4j
-public class UserController extends BaseController{
+public class UserController extends BaseController {
 
     @Autowired
     private IUserService userService;
@@ -60,9 +60,24 @@ public class UserController extends BaseController{
         session.setAttribute("uid", user.getUid());
         session.setAttribute("username", user.getUsername());
 
-        log.info("uid {}",session.getAttribute("uid"));
-        log.info("username {}",session.getAttribute("username"));
+        log.info("uid {}", session.getAttribute("uid"));
+        log.info("username {}", session.getAttribute("username"));
 
+        return result;
+    }
+
+    @PostMapping(value = "/changePassword")
+    public JsonResult<Void> changePassword(String oldPassword, String newPassword, HttpSession session) {
+        Integer uid = getUidFromSession(session);
+        String username = getUsernameFromSession(session);
+        JsonResult<Void> result = new JsonResult<>(ConstantUtils.SUCCESS);
+        try {
+            userService.updatePassword(uid, username, oldPassword, newPassword);
+        } catch (ServiceException e) {
+            result.setState(e.getMessageCode());
+            result.setMessage(e.getMessageDetail());
+            return result;
+        }
         return result;
     }
 }

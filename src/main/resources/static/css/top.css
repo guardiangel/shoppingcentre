@@ -2,7 +2,7 @@
 	padding: 20px 60px;
 }
 .top-item a{
-	color: white
+	color: #777777;
 	line-height: 40px;
 }
 .top-item li{
@@ -16,13 +16,13 @@
 	width: 300px;
 }
 .top-nav{
-	background-color:snow;
+	background-color: #F2F2F2;
 	height: 50px;
 	padding-top: 6px;
 	margin-bottom: 20px;
 }
 #top-dropdown-btn {
-	color: white;
+	color: #777777;
 }
 .top-dropdown-ul li {
 	width: 100%;
