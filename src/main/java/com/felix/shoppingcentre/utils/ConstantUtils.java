@@ -17,6 +17,13 @@ public final class ConstantUtils {
      */
     public static final int USER_DELETED = 1;
 
-
+    /**
+     * male
+     */
+    public static final int MALE = 1;
+    /**
+     * female
+     */
+    public static final int FEMALE = 0;
 
 }

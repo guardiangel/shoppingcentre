@@ -5,7 +5,10 @@
     <xs:complexType name="User">
         <xs:sequence>
             <xs:element name="name" type="xs:string"/>
-            <xs:element name="birth" type="xs:date"/>
+           <!-- <xs:element name="birth" type="xs:date"/>-->
+            <xs:element name="email" type="xs:string"/>
+            <xs:element name="phone" type="xs:string"/>
+            <xs:element name="createdTime" type="xs:dateTime"/>
             <xs:element name="gender" type="tns:Gender"/>
         </xs:sequence>
     </xs:complexType>
