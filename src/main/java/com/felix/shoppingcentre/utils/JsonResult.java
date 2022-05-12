@@ -15,7 +15,7 @@ public class JsonResult<T> implements Serializable {
     private String message;
     private T data;
 
-    public JsonResult() {
+    private JsonResult() {
     }
 
     public JsonResult(Integer state) {

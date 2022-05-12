@@ -11,9 +11,10 @@ public enum ExceptionResponseCode implements ResponseCodeInterface {
     USER_DELETED(50000, "user has been deleted"),
     USER_NOT_FOUND(50001, "user not found"),
     USER_REPEAT(50002, "user exists in the database"),
-    PASSWORD_ERROR(50003, "password doesn't match the existing one"),
-    PASSWORD_EQUAL_ORIGINAL(50004, "password can't equal to original one"),
-    PASSWORD_INPUT_WRONG(50005, "the original password you input don't match existing one"),
+    USER_UPDATE_ERROR(50003, "there is an error when update user info"),
+    PASSWORD_ERROR(60001, "password doesn't match the existing one"),
+    PASSWORD_EQUAL_ORIGINAL(60002, "password can't equal to original one"),
+    PASSWORD_INPUT_WRONG(60003, "the original password you input don't match existing one"),
     UNKNOW_ERROR(99999, "unknown exception, please contact administrator"),
     ;
 

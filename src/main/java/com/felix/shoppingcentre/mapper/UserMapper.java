@@ -40,4 +40,11 @@ public interface UserMapper {
      *  user object
      */
     User findByUid(Integer uid);
+
+    /**
+     * update user info
+     * @param user
+     * @return
+     */
+    Integer updateUserInfo(User user);
 }

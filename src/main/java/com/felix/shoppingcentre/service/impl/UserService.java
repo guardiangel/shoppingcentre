@@ -1,6 +1,5 @@
 package com.felix.shoppingcentre.service.impl;
 
-import com.felix.shoppingcentre.entity.BaseEntity;
 import com.felix.shoppingcentre.entity.User;
 import com.felix.shoppingcentre.entity.UserJpaEntity;
 import com.felix.shoppingcentre.exception.ExceptionResponseCode;
@@ -124,6 +123,45 @@ public class UserService implements IUserService {
         UserJpaEntity newUserJpa = userRepository.save(userJpa);
         if (ObjectUtils.isEmpty(newUserJpa)) {
             throw new ServiceException(ExceptionResponseCode.UNKNOW_ERROR);
+        }
+
+    }
+
+    @Override
+    public User findByUserId(Integer uid) {
+
+        User existUser = userMapper.findByUid(uid);
+
+        if (ObjectUtils.isEmpty(existUser)) {
+            throw new ServiceException(ExceptionResponseCode.USER_NOT_FOUND);
+        }
+        if (existUser.getDelete() == ConstantUtils.USER_DELETED) {
+            throw new ServiceException(ExceptionResponseCode.USER_DELETED);
+        }
+
+        User user = new User();
+        user.setUid(uid);
+        user.setUsername(existUser.getUsername());
+        user.setPhone(existUser.getPhone());
+        user.setEmail(existUser.getEmail());
+        user.setGender(existUser.getGender());
+
+        return user;
+    }
+
+    @Override
+    public void updateUserInfo(User user) {
+
+        User existUser = userMapper.findByUid(user.getUid());
+        if (ObjectUtils.isEmpty(existUser)) {
+            throw new ServiceException(ExceptionResponseCode.USER_NOT_FOUND);
+        }
+        if (existUser.getDelete() == ConstantUtils.USER_DELETED) {
+            throw new ServiceException(ExceptionResponseCode.USER_DELETED);
+        }
+        Integer rows = userMapper.updateUserInfo(user);
+        if (rows != 1) {
+            throw new ServiceException(ExceptionResponseCode.USER_UPDATE_ERROR);
         }
 
     }

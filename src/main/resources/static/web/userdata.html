@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--IE8 core-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no"/>
+    <title>shoppingcenter</title>
+    <script src="../bootstrap3/js/holder.js"></script>
+    <link href="../bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <script src="../bootstrap3/jquery-1.9.1.min.js"></script>
+    <script src="../bootstrap3/js/bootstrap.js"></script>
+    <!--font-->
+    <link rel="stylesheet" href="../bootstrap3/font-awesome-4.7.0/css/font-awesome.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/layout.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/top.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/footer.css"/>
+</head>
+<body>
+<header class="header">
+    <div class="row">
+        <div class="col-md-3">
+            <a href="index.html">
+                <img src="../images/index/demo.png" alt="">
+            </a>
+        </div>
+
+        <div class="col-md-9 top-item">
+            <ul class="list-inline pull-right">
+                <li><a href="favorites.html"><span class="fa fa-heart"></span>&nbsp;favourites</a></li>
+                <li class="li-split">|</li>
+                <li><a href="orders.html"><span class="fa fa-file-text"></span>orders</a></li>
+                <li class="li-split">|</li>
+                <li><a href="cart.html"><span class="fa fa-cart-plus"></span>cart</a></li>
+                <li class="li-split">|</li>
+                <!--dropdown list-->
+                <li>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+                                            <span id="top-dropdown-btn"><span class="fa fa-gears"></span>manage<span
+                                                    class="caret"></span></span>
+                        </button>
+                        <ul class="dropdown-menu top-dropdown-ul" role="menu">
+                            <li><a href="password.html">modify password</a></li>
+                            <li><a href="userdata.html">personal profile</a></li>
+                            <li><a href="upload.html">upload headphoto</a></li>
+                            <li><a href="address.html">address management</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="li-split">|</li>
+                <li><a href="login.html"><span class="fa fa-user"></span>&nbsp;login</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+<!--nav bar-->
+<div class="row top-nav">
+    <div class="col-md-6">
+    </div>
+    <div class="col-md-6">
+        <form action="search.html" class="form-inline pull-right" role="form">
+            <div class="form-group">
+                <input type="text" class="form-control" id="search" name="search"
+                       placeholder="please input name of goods"/>
+            </div>
+            <button type="submit" class="btn btn-default btn-sm"><span class="fa fa-search"></span></button>
+        </form>
+    </div>
+</div>
+
+<!--main part-->
+<div class="container">
+    <!--left nav bar-->
+    <div class="col-md-2">
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <p class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFirst">orders</a>
+                    </p>
+                </div>
+                <div id="collapseFirst" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div><a href="orders.html">all orders</a></div>
+                        <div><a href="orders.html">wait to pay</a></div>
+                        <div><a href="orders.html">wait to receive</a></div>
+                        <div><a href="orders.html">wait to valuate</a></div>
+                        <div><a href="orders.html">get refund</a></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <p class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">change
+                            profile</a>
+                    </p>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <div><a href="password.html"><b>modify password</b></a></div>
+                        <div><a href="userdata.html">personal profile</a></div>
+                        <div><a href="upload.html">upload headphoto</a></div>
+                        <div><a href="address.html">address management</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--right main work area-->
+    <div class="col-md-10">
+        <div class="panel panel-default">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#">modify password</a></li>
+                <li><a href="userdata.html">personal profile</a></li>
+                <li><a href="upload.html">upload headphoto</a></li>
+                <li><a href="address.html">address management</a></li>
+            </ul>
+            <div class="panel-body">
+                <!--form-->
+                <form id="changeUserInfoForm" class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="username">username:</label>
+                        <div class="col-md-8">
+                            <input id="username" name="username" type="text" class="form-control" value="" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="phone">phone:</label>
+                        <div class="col-md-8">
+                            <input id="phone" name="phone" type="text" class="form-control" placeholder="please input phone number">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" for="email">email:</label>
+                        <div class="col-md-8">
+                            <input id="email" name="email" type="text" class="form-control" placeholder="please input email">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label" >gender:</label>
+                        <div class="col-md-8">
+                            <label class="radio-inline">
+                                <input id="gender-male" type="radio" name="gender" value="1">male</label>
+                            </label>
+                            <label class="radio-inline">
+                                <input id="gender-female" type="radio" name="gender" value="0">female</label>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <input id="changeUserInfoButton" name="changeUserInfoButton" type="button" class="btn btn-primary" value="modify"/>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--footer nav bar-->
+<footer class="footer">
+    <div class="text-center rights container">
+        <div class="col-md-offset-2 col-md-2">
+            <span class="fa fa-thumbs-o-up"></span>
+            <p>quality assurance</p>
+        </div>
+
+        <div class="col-md-offset-2 col-md-2">
+            <span class="fa fa-thumbs-o-up"></span>
+            <p>personal custom</p>
+        </div>
+
+        <div class="col-md-offset-2 col-md-2">
+            <span class="fa fa-thumbs-o-up"></span>
+            <p>personal custom</p>
+        </div>
+
+        <div class="col-md-offset-2 col-md-2">
+            <span class="fa fa-thumbs-o-up"></span>
+            <p>student only</p>
+        </div>
+
+        <div class="col-md-offset-2 col-md-2">
+            <span class="fa fa-thumbs-o-up"></span>
+            <p>vip only</p>
+        </div>
+    </div>
+
+    <div class="col-md-12 text-center bottom">
+        Copyright © 2022 dnsc.cn All Rights Reserved
+        <a target="_blank" style="font-size: 12px" href="http://www.google.com/">personal copyright</a>
+    </div>
+</footer>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.ajax({
+            url: "/user/getUserById",
+            type: "GET",
+            dataType: "json",
+            success: function (res) {
+                if (res.state == 200) {
+                    $("#username").val(res.data.username);
+                    $("#phone").val(res.data.phone);
+                    $("#email").val(res.data.email);
+                    let radio = res.data.gender == 0 ? $("#gender-female") : $("#gender-male");
+                    console.log(radio);
+                    radio.prop("checked", "checked");
+                } else {
+                    alert("get user failed" + res.message);
+                }
+            }
+        });
+    });
+
+    $("#changeUserInfoButton").click(function () {
+        console.log($("#changeUserInfoForm").serialize());
+        $.ajax({
+            url: "/user/updateUserInfo",
+            type: "POST",
+            data: $("#changeUserInfoForm").serialize(),
+            dataType: "json",
+            success: function (res) {
+                if (res.state == 200) {
+                    alert("modify user info success");
+                    location.href = "login.html";
+                } else {
+                    alert("modify user info failed", res.message());
+                }
+            },
+            error: function (err) {
+                alert("login info expires, please login again, response code is :", err.state());
+                location.href = "login.html";
+            }
+        })
+    });
+</script>
+
+</body>
+</html>

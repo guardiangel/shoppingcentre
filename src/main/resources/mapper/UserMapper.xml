@@ -3,6 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.felix.shoppingcentre.mapper.UserMapper">
+
     <resultMap id="UserMap" type="com.felix.shoppingcentre.entity.User">
         <id column="uid" property="uid"></id>
         <result column="is_delete" property="delete"/>
@@ -16,33 +17,76 @@
      keyProperty means the property of object, not the name of column in the table-->
     <insert id="insert" useGeneratedKeys="true" keyProperty="uid">
         <![CDATA[
-            insert into t_user(username, password, salt, phone, email,
-            gender, avatar, is_delete, created_user, created_time, modified_user, modified_time)
-            values (#{username}, #{password}, #{salt}, #{phone}, #{email},
-             #{gender}, #{avatar}, #{delete}, #{createdUser}, #{createdTime}, #{modifiedUser}, #{modifiedTime})
+        INSERT INTO t_user(username, password, salt, phone, email,
+                           gender, avatar, is_delete, created_user, created_time, modified_user, modified_time)
+        VALUES (#{username}, #{password}, #{salt}, #{phone}, #{email},
+                #{gender}, #{avatar}, #{delete}, #{createdUser}, #{createdTime}, #{modifiedUser}, #{modifiedTime})
         ]]>
     </insert>
 
     <select id="findByUsername" resultMap="UserMap">
         <![CDATA[
-        select * from t_user where username=#{username}
+        SELECT
+               uid,
+               username,
+               password,
+               salt,
+               phone,
+               email,
+               gender,
+               avatar,
+               is_delete,
+               created_user,
+               created_time,
+               modified_user,
+               modified_time
+        FROM t_user
+        WHERE username = #{username}
         ]]>
     </select>
 
     <select id="findByUid" resultMap="UserMap">
         <![CDATA[
-        select * from t_user where uid=#{uid}
+        SELECT
+               uid,
+               username,
+               password,
+               salt,
+               phone,
+               email,
+               gender,
+               avatar,
+               is_delete,
+               created_user,
+               created_time,
+               modified_user,
+               modified_time
+        FROM t_user
+        WHERE uid = #{uid}
         ]]>
     </select>
 
+    <!--update user's passwors-->
     <update id="updatePassword" parameterType="com.felix.shoppingcentre.entity.User">
         <![CDATA[
-        update t_user
-        set
-        password=#{password},
-        modified_user=#{modifiedUser},
-        modified_time=#{modifiedTime}
-        where uid=#{uid}
+        UPDATE t_user
+        SET password=#{password},
+            modified_user=#{modifiedUser},
+            modified_time=#{modifiedTime}
+        WHERE uid = #{uid}
+        ]]>
+    </update>
+
+    <!--update user info-->
+    <update id="updateUserInfo" parameterType="com.felix.shoppingcentre.entity.User">
+        <![CDATA[
+        UPDATE t_user
+        SET phone=ifnull(#{phone}, phone),
+            email=ifnull(#{email}, email),
+            gender=ifnull(#{gender}, gender),
+            modified_user=#{modifiedUser},
+            modified_time=#{modifiedTime}
+        WHERE uid = #{uid}
         ]]>
     </update>
 
