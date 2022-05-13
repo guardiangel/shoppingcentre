@@ -45,18 +45,21 @@ public class UploadController extends BaseController {
         JsonResult<String> result = new JsonResult<>(ConstantUtils.SUCCESS);
 
         if (file.isEmpty()) {
-            throw new ServiceException(ExceptionResponseCode.FILE_NULL);
+            result.setState(ExceptionResponseCode.FILE_NULL.getCode());
+            result.setMessage(ExceptionResponseCode.FILE_NULL.getMsg());
         }
         if (file.getSize() > Integer.valueOf(AVATAR_MAX_SIZE)) {
-            throw new ServiceException(ExceptionResponseCode.FILE_OVER_MAX_SIZE);
+            result.setState(ExceptionResponseCode.FILE_OVER_MAX_SIZE.getCode());
+            result.setMessage(ExceptionResponseCode.FILE_OVER_MAX_SIZE.getMsg());
         }
         String contentType = file.getContentType();
         if (!avatarListType.contains(contentType)) {
-            StringBuilder stringBuilder = new StringBuilder("not accepted file type, accepted types are:");
+            StringBuilder stringBuilder = new StringBuilder("not accepted file type, accepted types are:\n");
             avatarListType.forEach((value) -> {
                 stringBuilder.append(value).append("\n");
             });
-            throw new ServiceException(ExceptionResponseCode.FILE_TYPE_ERROR.getCode(), stringBuilder.toString());
+            result.setState(ExceptionResponseCode.FILE_TYPE_ERROR.getCode());
+            result.setMessage(stringBuilder.toString());
         }
 
         // get original file name
@@ -80,9 +83,11 @@ public class UploadController extends BaseController {
         try {
             file.transferTo(new File(dir, fullFilename));
         } catch (IllegalStateException e) {
-            throw new ServiceException(ExceptionResponseCode.FILE_STATE_ABNORMAL);
+            result.setState(ExceptionResponseCode.FILE_STATE_ABNORMAL.getCode());
+            result.setMessage(ExceptionResponseCode.FILE_STATE_ABNORMAL.getMsg());
         } catch (IOException e) {
-            throw new ServiceException(ExceptionResponseCode.FILE_UPLOAD_ERROR);
+            result.setState(ExceptionResponseCode.FILE_UPLOAD_ERROR.getCode());
+            result.setMessage(ExceptionResponseCode.FILE_UPLOAD_ERROR.getMsg());
         }
 
         String avatar = "/upload/" + fullFilename;
