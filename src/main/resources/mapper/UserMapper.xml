@@ -90,4 +90,16 @@
         ]]>
     </update>
 
+    <!--update user info-->
+    <update id="updateUserAvatar" parameterType="com.felix.shoppingcentre.entity.User">
+        <![CDATA[
+        UPDATE t_user
+        SET
+            avatar=ifnull(#{avatar}, avatar),
+            modified_user=#{modifiedUser},
+            modified_time=#{modifiedTime}
+        WHERE uid = #{uid}
+        ]]>
+    </update>
+
 </mapper>

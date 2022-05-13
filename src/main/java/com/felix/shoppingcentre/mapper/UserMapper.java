@@ -47,4 +47,11 @@ public interface UserMapper {
      * @return
      */
     Integer updateUserInfo(User user);
+
+    /**
+     * upload head photo
+     * @param user
+     * @return
+     */
+    Integer updateUserAvatar(User user);
 }

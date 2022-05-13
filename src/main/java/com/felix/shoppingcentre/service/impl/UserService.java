@@ -166,6 +166,21 @@ public class UserService implements IUserService {
 
     }
 
+    @Override
+    public void updateUserAvatar(User user) {
+        User existUser = userMapper.findByUid(user.getUid());
+        if (ObjectUtils.isEmpty(existUser)) {
+            throw new ServiceException(ExceptionResponseCode.USER_NOT_FOUND);
+        }
+        if (existUser.getDelete() == ConstantUtils.USER_DELETED) {
+            throw new ServiceException(ExceptionResponseCode.USER_DELETED);
+        }
+        Integer rows = userMapper.updateUserAvatar(user);
+        if (rows != 1) {
+            throw new ServiceException(ExceptionResponseCode.USER_UPDATE_ERROR);
+        }
+    }
+
     /**
      * encrypt password
      *

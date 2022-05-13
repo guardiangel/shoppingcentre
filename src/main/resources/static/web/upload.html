@@ -5,17 +5,18 @@
     <!--IE8 core-->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="renderer" content="webkit">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no"/>
     <title>shoppingcenter</title>
     <script src="../bootstrap3/js/holder.js"></script>
     <link href="../bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css">
     <script src="../bootstrap3/jquery-1.9.1.min.js"></script>
+    <!--<script src="../js/jquery-3.6.0.js"></script>-->
     <script src="../bootstrap3/js/bootstrap.js"></script>
     <!--font-->
-    <link rel="stylesheet" href="../bootstrap3/font-awesome-4.7.0/css/font-awesome.css" />
-    <link rel="stylesheet" type="text/css" href="../css/layout.css" />
-    <link rel="stylesheet" type="text/css" href="../css/top.css" />
-    <link rel="stylesheet" type="text/css" href="../css/footer.css" />
+    <link rel="stylesheet" href="../bootstrap3/font-awesome-4.7.0/css/font-awesome.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/layout.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/top.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/footer.css"/>
 </head>
 <body>
 <header class="header">
@@ -38,8 +39,8 @@
                 <li>
                     <div class="btn-group">
                         <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
-									<span id="top-dropdown-btn"><span class="fa fa-gears"></span>manage<span
-                                            class="caret"></span></span>
+                                            <span id="top-dropdown-btn"><span class="fa fa-gears"></span>manage<span
+                                                    class="caret"></span></span>
                         </button>
                         <ul class="dropdown-menu top-dropdown-ul" role="menu">
                             <li><a href="password.html">modify password</a></li>
@@ -55,7 +56,6 @@
         </div>
     </div>
 </header>
-
 <!--nav bar-->
 <div class="row top-nav">
     <div class="col-md-6">
@@ -64,7 +64,7 @@
         <form action="search.html" class="form-inline pull-right" role="form">
             <div class="form-group">
                 <input type="text" class="form-control" id="search" name="search"
-                       placeholder="please input name of goods" />
+                       placeholder="please input name of goods"/>
             </div>
             <button type="submit" class="btn btn-default btn-sm"><span class="fa fa-search"></span></button>
         </form>
@@ -123,36 +123,20 @@
             </ul>
             <div class="panel-body">
                 <!--form-->
-                <form id="changePasswordForm" class="form-horizontal" role="form">
+                <form id="uploadAvatarForm" class="form-horizontal" action="" enctype="multipart/form-data" method="post" role="form">
                     <div class="form-group">
-                        <label class="col-md-2 control-label" for="oldPassword">original passwrod</label>
-                        <div class="col-md-8">
-                            <input type="password" id="oldPassword" name="oldPassword" class="form-control"
-                                   placeholder="please input original password" />
+                        <label class="col-md-2 control-label">choose a photo:</label>
+                        <div class="cod-md-5">
+                            <img id="img-avatar" src="" class="img-responsive">
+                        </div>
+                        <div class="col-md-offset-2 col-md-4">
+                            <input id="file" type="file" name="file"/>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-md-2 control-label" for="newPassword">new passwrod</label>
-                        <div class="col-md-8">
-                            <input type="password" id="newPassword" name="newPassword" class="form-control"
-                                   placeholder="please input new password" />
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-md-2 control-label" for="confirmNewPassword">confirm new
-                            passwrod</label>
-                        <div class="col-md-8">
-                            <input type="password" id="confirmNewPassword" name="confirmNewPassword"
-                                   class="form-control" placeholder="please input new password again" />
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <input id="changePasswordButton" type="button" class="btn btn-primary"
-                                   value="modify" />
+                        <div class="col-md-offset-2 col-sm-10">
+                            <input id="uploadAvatarButton" type="button" class="btn btn-primary" value="upload"/>
                         </div>
                     </div>
                 </form>
@@ -160,6 +144,7 @@
         </div>
     </div>
 </div>
+
 <!--footer nav bar-->
 <footer class="footer">
     <div class="text-center rights container">
@@ -194,26 +179,33 @@
         <a target="_blank" style="font-size: 12px" href="http://www.google.com/">personal copyright</a>
     </div>
 </footer>
-<script type="text/javascript">
-    $("#changePasswordButton").click(function() {
+
+    <script type="text/javascript">
+        $("#uploadAvatarButton").click(function() {
+            console.log(new FormData($("#uploadAvatarForm")[0]));
+            //formData.append("file", $("fileupload"));
         $.ajax({
-            url: "/user/changePassword",
+            url: "/file/upload.do",
             type: "POST",
-            data: $("#changePasswordForm").serialize(),
-            dataType: "json",
+            data: new FormData($("#uploadAvatarForm")[0]),
+            processData: false,
+            contentType: false,
+            dataType: "JSON",
             success: function(res) {
                 if (res.state === 200) {
-                    alert("modify password success");
+                    $("#img-avatar").attr("src", res.data);
+                    alert("upload photo success");
                 } else {
-                    alert("modify password failed, the reason is " + res.message);
+                    alert("upload photo failed, the reason is " + res.message);
                 }
             },
-            error:function(resOut){
-                alert("session expires, please login again, http response code is :" + resOut.status);
+            error:function(res){
+                alert("session expires, please login again, http response code is :" + res.status);
                 location.href="login.html";
             }
         });
     });
 </script>
+
 </body>
 </html>

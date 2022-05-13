@@ -1,5 +1,8 @@
 package com.felix.shoppingcentre.utils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -39,5 +42,13 @@ public final class PasswordUtils {
         String salt = "f10150b2da944411b415";
         String password = new PasswordEncoder(salt).encodePassword(rawPassword);
         System.err.println(password);
+
+        List<String> avatarListType
+                = new ArrayList<String>(Arrays.asList("image/jpeg", "image/jpg", "image/png", "image/bmp", "image/gif"));
+        StringBuilder stringBuilder = new StringBuilder("");
+        avatarListType.forEach((value)->{
+            stringBuilder.append(value);
+        });
+
     }
 }

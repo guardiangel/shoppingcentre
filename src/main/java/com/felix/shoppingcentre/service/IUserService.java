@@ -17,5 +17,11 @@ public interface IUserService {
 
     void updateUserInfo(User user);
 
+    /**
+     * update user's avatar
+     * @param user
+     */
+    void updateUserAvatar(User user);
+
 
 }
