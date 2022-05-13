@@ -1,10 +1,13 @@
 package com.felix.shoppingcentre.mapper;
 
 import com.felix.shoppingcentre.entity.User;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 /**
  * user dao
  */
+@Repository
 public interface UserMapper {
     /**
      * add user
