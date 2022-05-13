@@ -90,6 +90,7 @@ public class UploadController extends BaseController {
         String username = getUsernameFromSession(session);
         User user = new User();
         user.setUid(uid);
+        user.setAvatar(avatar);
         user.setModifiedUser(username);
         user.setModifiedTime(new Date());
         try {

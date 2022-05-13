@@ -10,7 +10,7 @@
     <script src="../bootstrap3/js/holder.js"></script>
     <link href="../bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css">
     <script src="../bootstrap3/jquery-1.9.1.min.js"></script>
-    <!--<script src="../js/jquery-3.6.0.js"></script>-->
+    <script src="../bootstrap3/js/jquery.cookie.js" charset="UTF-8"></script>
     <script src="../bootstrap3/js/bootstrap.js"></script>
     <!--font-->
     <link rel="stylesheet" href="../bootstrap3/font-awesome-4.7.0/css/font-awesome.css"/>
@@ -181,9 +181,13 @@
 </footer>
 
     <script type="text/javascript">
+        <!--set up img, this value is set up in login.html-->
+        $(document).ready(function () {
+            $("#img-avatar").attr("src", $.cookie("avatar"));
+        });
+
         $("#uploadAvatarButton").click(function() {
-            console.log(new FormData($("#uploadAvatarForm")[0]));
-            //formData.append("file", $("fileupload"));
+            //console.log(new FormData($("#uploadAvatarForm")[0]));
         $.ajax({
             url: "/file/upload.do",
             type: "POST",
@@ -195,6 +199,7 @@
                 if (res.state === 200) {
                     $("#img-avatar").attr("src", res.data);
                     alert("upload photo success");
+                    $.cookie("avatar", res.data.avatar, {expires: 7});//set up the avatar in cookie again
                 } else {
                     alert("upload photo failed, the reason is " + res.message);
                 }

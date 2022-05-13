@@ -119,6 +119,8 @@
             success:function(res) {
                 if(res.state === 200) {
                     alert("login success");
+                    $.cookie("avatar", res.data.avatar, {expires: 7});//set up the avatar in cookie
+                    //console.log($.cookie("avatar"));
                     location.href="/index.html";
                 } else {
                     alert("login failed, the reason is " + res.message);
