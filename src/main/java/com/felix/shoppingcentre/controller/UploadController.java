@@ -39,18 +39,20 @@ public class UploadController extends BaseController {
     @RequestMapping("/upload.do")
     @ResponseBody
     public JsonResult<String> upload(HttpServletRequest request,
-                         @RequestParam("file") MultipartFile file,
-                         HttpSession session) {
+                                     @RequestParam("file") MultipartFile file,
+                                     HttpSession session) {
 
         JsonResult<String> result = new JsonResult<>(ConstantUtils.SUCCESS);
 
         if (file.isEmpty()) {
             result.setState(ExceptionResponseCode.FILE_NULL.getCode());
             result.setMessage(ExceptionResponseCode.FILE_NULL.getMsg());
+            return result;
         }
         if (file.getSize() > Integer.valueOf(AVATAR_MAX_SIZE)) {
             result.setState(ExceptionResponseCode.FILE_OVER_MAX_SIZE.getCode());
             result.setMessage(ExceptionResponseCode.FILE_OVER_MAX_SIZE.getMsg());
+            return result;
         }
         String contentType = file.getContentType();
         if (!avatarListType.contains(contentType)) {
@@ -60,6 +62,7 @@ public class UploadController extends BaseController {
             });
             result.setState(ExceptionResponseCode.FILE_TYPE_ERROR.getCode());
             result.setMessage(stringBuilder.toString());
+            return result;
         }
 
         // get original file name
@@ -85,9 +88,11 @@ public class UploadController extends BaseController {
         } catch (IllegalStateException e) {
             result.setState(ExceptionResponseCode.FILE_STATE_ABNORMAL.getCode());
             result.setMessage(ExceptionResponseCode.FILE_STATE_ABNORMAL.getMsg());
+            return result;
         } catch (IOException e) {
             result.setState(ExceptionResponseCode.FILE_UPLOAD_ERROR.getCode());
             result.setMessage(ExceptionResponseCode.FILE_UPLOAD_ERROR.getMsg());
+            return result;
         }
 
         String avatar = "/upload/" + fullFilename;
@@ -103,6 +108,7 @@ public class UploadController extends BaseController {
         } catch (ServiceException e) {
             result.setState(e.getMessageCode());
             result.setMessage(e.getMessageDetail());
+            return result;
         }
         result.setData(avatar);
         return result;
