@@ -11,17 +11,21 @@
     <link href="../bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css">
     <script src="../bootstrap3/jquery-1.9.1.min.js"></script>
     <script src="../bootstrap3/js/bootstrap.js"></script>
+
+    <!-- <script type="text/javascript" src="../js/distpicker.data.js"></script>
+     <script type="text/javascript" src="../js/distpicker.js"></script>-->
     <!--font-->
     <link rel="stylesheet" href="../bootstrap3/font-awesome-4.7.0/css/font-awesome.css"/>
     <link rel="stylesheet" type="text/css" href="../css/layout.css"/>
     <link rel="stylesheet" type="text/css" href="../css/top.css"/>
     <link rel="stylesheet" type="text/css" href="../css/footer.css"/>
+
 </head>
 <body>
 <header class="header">
     <div class="row">
         <div class="col-md-3">
-            <a href="index.html">
+            <a href="../index.html">
                 <img src="../images/index/demo.png" alt="">
             </a>
         </div>
@@ -116,49 +120,82 @@
         <div class="panel panel-default">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#">modify password</a></li>
-                <li class="active"><a href="#">personal profile</a></li>
+                <li><a href="userdata.html">personal profile</a></li>
                 <li><a href="upload.html">upload headphoto</a></li>
-                <li><a href="address.html">address management</a></li>
+                <li class="active"><a href="#">address management</a></li>
             </ul>
             <div class="panel-body">
                 <!--form-->
-                <form id="changeUserInfoForm" class="form-horizontal" role="form">
+                <form id="addNewAdressForm" class="form-horizontal" role="form">
                     <div class="form-group">
-                        <label class="col-md-2 control-label" for="username">username:</label>
+                        <label class="col-md-2 control-label" for="name"><span
+                                class="txtred">*</span>receiver:</label>
                         <div class="col-md-8">
-                            <input id="username" name="username" type="text" class="form-control" value="" readonly>
+                            <input id="name" name="name" type="text" class="form-control"
+                                   placeholder="please input receiver's name">
+                        </div>
+                    </div>
+
+                    <div class="address_content" data-toggle="distpicker">
+                        <div class="form-group">
+                            <label class="col-md-2 control-label"><span class="txtred">*</span>province：</label>
+                            <div class="col-md-3">
+                                <select id="province-list" name="provinceCode" class="form-control"
+                                        data-province="---- choose province ----"></select>
+                            </div>
+                            <label class="col-md-2 control-label"><span class="txtred">*</span>city：</label>
+                            <div class="col-md-3">
+                                <select id="city-list" name="cityCode" class="form-control"
+                                        data-city="---- choose city ----"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label"><span class="txtred">*</span>county/district：</label>
+                            <div class="col-md-3">
+                                <select id="area-list" name="areaCode" class="form-control"
+                                        data-district="---- choose district ----"></select>
+                            </div>
+                            <label class="col-md-2 control-label">postal code：</label>
+                            <div class="col-md-3">
+                                <input name="zip" type="text" class="form-control"
+                                       placeholder="please input your postal code">
+                            </div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-md-2 control-label" for="phone">phone:</label>
+                        <label class="col-md-2 control-label"><span class="txtred">*</span>detailed address：</label>
                         <div class="col-md-8">
-                            <input id="phone" name="phone" type="text" class="form-control" placeholder="please input phone number">
+                            <textarea name="address" class="form-control" rows="3"
+                                      placeholder="please input detailed address"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label"><span class="txtred">*</span>phone：</label>
+                        <div class="col-md-3">
+                            <input name="phone" type="text" class="form-control" placeholder="please input your phone">
+                        </div>
+                        <label class="col-md-2 control-label">telephone number：</label>
+                        <div class="col-md-3">
+                            <input name="tel" type="text" class="form-control"
+                                   placeholder="please input your telephone number">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">address type：</label>
+                        <div class="col-md-8">
+                            <input name="tag" type="text" class="form-control"
+                                   placeholder="please input address type，such as :family, school, workplace">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-md-2 control-label" for="email">email:</label>
-                        <div class="col-md-8">
-                            <input id="email" name="email" type="text" class="form-control" placeholder="please input email">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-md-2 control-label" >gender:</label>
-                        <div class="col-md-8">
-                            <label class="radio-inline">
-                                <input id="gender-male" type="radio" name="gender" value="1">male</label>
-                            </label>
-                            <label class="radio-inline">
-                                <input id="gender-female" type="radio" name="gender" value="0">female</label>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <input id="changeUserInfoButton" name="changeUserInfoButton" type="button" class="btn btn-primary" value="modify"/>
+                        <label class="col-md-2 control-label"><a
+                                href="address.html">return </a>&nbsp;&nbsp;&nbsp;</label>
+                        <div class="col-sm-10">
+                            <input id="addNewAddressButton" type="button" class="col-md-1 btn btn-primary"
+                                   value="save"/>
+                            <input type="reset" class="col-md-offset-1 col-md-1 btn btn-primary" value="reset"/>
                         </div>
                     </div>
 
@@ -204,48 +241,113 @@
 </footer>
 
 <script type="text/javascript">
+    let options = "<option value='0'>....select.....</option> ";
     $(document).ready(function () {
-        $.ajax({
-            url: "/user/getUserById",
-            type: "GET",
-            dataType: "json",
-            success: function (res) {
-                if (res.state == 200) {
-                    $("#username").val(res.data.username);
-                    $("#phone").val(res.data.phone);
-                    $("#email").val(res.data.email);
-                    let radio = res.data.gender == 0 ? $("#gender-female") : $("#gender-male");
-                    console.log(radio);
-                    radio.prop("checked", "checked");
-                } else {
-                    alert("get user failed" + res.message);
-                }
-            }
-        });
+        displayProvinceList();
+        $("#city-list").append(options);
+        $("#area-list").append(options);
+    });
+    $("#province-list").change(function () {
+        displayCityList();
+    });
+    $("#city-list").change(function () {
+        displayAreaList();
     });
 
-    $("#changeUserInfoButton").click(function () {
-        console.log($("#changeUserInfoForm").serialize());
+    function displayProvinceList() {
+        $("#province-list").append(options);
         $.ajax({
-            url: "/user/updateUserInfo",
+                url: "/districts/getDistrict",
+                type: "GET",
+                data: "parent=86",
+                datatype: "JSON",
+                success: function (res) {
+                    if (res.state == 200) {
+                        let list = res.data;
+                        for (let i = 0; i < list.length; i++) {
+                            let option = "<option value='" + list[i].code + "'>" + list[i].name + "</option>";
+                            $("#province-list").append(option);
+                        }
+                    }
+                }
+            }
+        )
+    }
+
+    function displayCityList() {
+        let parent = $("#province-list").val();
+        $("#city-list").empty();
+        $("#area-list").empty();
+        $("#city-list").append(options);
+        $("#area-list").append(options);
+        if (parent == 0) {
+            return;
+        }
+        $.ajax({
+                url: "/districts/getDistrict",
+                type: "GET",
+                data: "parent=" + parent,
+                datatype: "JSON",
+                success: function (res) {
+                    if (res.state == 200) {
+                        let list = res.data;
+                        console.log("test", list);
+                        for (let i = 0; i < list.length; i++) {
+                            let option = "<option value='" + list[i].code + "'>" + list[i].name + "</option>";
+                            $("#city-list").append(option);
+                        }
+                    }
+                }
+            }
+        )
+    }
+
+    function displayAreaList() {
+        let parent = $("#city-list").val();
+        $("#area-list").empty();
+        $("#area-list").append(options);
+        if (parent == 0) {
+            return;
+        }
+        $.ajax({
+                url: "/districts/getDistrict",
+                type: "GET",
+                data: "parent=" + parent,
+                datatype: "JSON",
+                success: function (res) {
+                    if (res.state == 200) {
+                        let list = res.data;
+                        for (let i = 0; i < list.length; i++) {
+                            let option = "<option value='" + list[i].code + "'>" + list[i].name + "</option>";
+                            $("#area-list").append(option);
+                        }
+                    }
+                }
+            }
+        )
+    }
+
+    $("#addNewAddressButton").click(function () {
+        console.log($("#addNewAdressForm").serialize());
+        $.ajax({
+            url: "/address/addNewAddress",
             type: "POST",
-            data: $("#changeUserInfoForm").serialize(),
-            dataType: "json",
+            data: $("#addNewAdressForm").serialize(),
+            dataType: "JSON",
             success: function (res) {
+                console.log("res", res);
                 if (res.state == 200) {
-                    alert("modify user info success");
-                    location.href = "login.html";
+                    alert("save address info success");
                 } else {
-                    alert("modify user info failed", res.message());
+                    alert("save address info error:"+res.message);
                 }
             },
             error: function (err) {
-                alert("login info expires, please login again, response code is :", err.state());
-                location.href = "login.html";
+                alert("login info expires, please login again, response code is :"+ err.state);
             }
         })
     });
-</script>
 
+</script>
 </body>
 </html>

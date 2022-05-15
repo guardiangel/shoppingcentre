@@ -114,7 +114,6 @@ public class UserController extends BaseController {
         } catch (ServiceException e) {
             result.setState(e.getMessageCode());
             result.setMessage(e.getMessageDetail());
-            return result;
         }
         return result;
     }

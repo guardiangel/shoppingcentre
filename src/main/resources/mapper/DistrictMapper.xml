@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.felix.shoppingcentre.mapper.DistrictMapper">
+    <select id="findByParentCode" parameterType="java.lang.String"
+            resultType="com.felix.shoppingcentre.entity.District">
+        <![CDATA[
+        select
+               id,
+               parent,
+               code,
+               name
+        from t_dict_district
+        WHERE parent = #{parent}
+        ]]>
+    </select>
+
+    <select id="findNameByCode" parameterType="java.lang.String"
+            resultType="java.lang.String">
+        <![CDATA[
+        select
+            name
+        from t_dict_district
+        WHERE code = #{code}
+        ]]>
+    </select>
+</mapper>

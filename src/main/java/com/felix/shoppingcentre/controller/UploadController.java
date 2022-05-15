@@ -33,7 +33,7 @@ public class UploadController extends BaseController {
     private Integer AVATAR_MAX_SIZE;
 
     public static final List<String> avatarListType
-            = new ArrayList<String>(Arrays.asList("image/jpeg", "image/jpg",
+            = new ArrayList<>(Arrays.asList("image/jpeg", "image/jpg",
             "image/png", "image/bmp", "image/gif"));
 
     @RequestMapping("/upload.do")

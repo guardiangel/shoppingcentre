@@ -5,6 +5,7 @@ package com.felix.shoppingcentre.exception;
  */
 public enum ExceptionResponseCode implements ResponseCodeInterface {
 
+    DATA_VALIDATION(99998, ""),
     SUCCESS(0, "success"),
     UNKNOW_ERROR(99999, "unknown exception, please contact administrator"),
     GOODS_NO_FOUND(40001, "goods not found"),
@@ -23,7 +24,8 @@ public enum ExceptionResponseCode implements ResponseCodeInterface {
     FILE_TYPE_ERROR(70002, "file type can't be accepted"),
 
     FILE_STATE_ABNORMAL(700003, "file state error, maybe it's moved or deleted"),
-    FILE_UPLOAD_ERROR(70004, "there is an error when uploading avata, please try later" );
+    FILE_UPLOAD_ERROR(70004, "there is an error when uploading avata, please try later"),
+    ADDRESS_OVER_LIMIT(80001, "address count has exceeded the limit");
 
 
     int code;
