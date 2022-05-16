@@ -11,17 +11,19 @@
     <link href="../bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css">
     <script src="../bootstrap3/jquery-1.9.1.min.js"></script>
     <script src="../bootstrap3/js/bootstrap.js"></script>
+
     <!--font-->
     <link rel="stylesheet" href="../bootstrap3/font-awesome-4.7.0/css/font-awesome.css"/>
     <link rel="stylesheet" type="text/css" href="../css/layout.css"/>
     <link rel="stylesheet" type="text/css" href="../css/top.css"/>
     <link rel="stylesheet" type="text/css" href="../css/footer.css"/>
+
 </head>
 <body>
 <header class="header">
     <div class="row">
         <div class="col-md-3">
-            <a href="index.html">
+            <a href="../index.html">
                 <img src="../images/index/demo.png" alt="">
             </a>
         </div>
@@ -116,53 +118,35 @@
         <div class="panel panel-default">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#">modify password</a></li>
-                <li class="active"><a href="#">personal profile</a></li>
+                <li><a href="userdata.html">personal profile</a></li>
                 <li><a href="upload.html">upload headphoto</a></li>
-                <li><a href="address.html">address management</a></li>
+                <li class="active"><a href="#">address management</a></li>
             </ul>
             <div class="panel-body">
-                <!--form-->
-                <form id="changeUserInfoForm" class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label class="col-md-2 control-label" for="username">username:</label>
-                        <div class="col-md-8">
-                            <input id="username" name="username" type="text" class="form-control" value="" readonly>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-md-2 control-label" for="phone">phone:</label>
-                        <div class="col-md-8">
-                            <input id="phone" name="phone" type="text" class="form-control" placeholder="please input phone number">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-md-2 control-label" for="email">email:</label>
-                        <div class="col-md-8">
-                            <input id="email" name="email" type="text" class="form-control" placeholder="please input email">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-md-2 control-label" >gender:</label>
-                        <div class="col-md-8">
-                            <label class="radio-inline">
-                                <input id="gender-male" type="radio" name="gender" value="1">male</label>
-                            </label>
-                            <label class="radio-inline">
-                                <input id="gender-female" type="radio" name="gender" value="0">female</label>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <input id="changeUserInfoButton" name="changeUserInfoButton" type="button" class="btn btn-primary" value="modify"/>
-                        </div>
-                    </div>
-
-                </form>
+                <table class="table table-striped">
+                    <caption>address list</caption>
+                    <thead>
+                        <tr>
+                            <th>address type</th>
+                            <th>receiver</th>
+                            <th>address detail</th>
+                            <th>contact phone</th>
+                            <th colspan="3">operate</th>
+                        </tr>
+                    </thead>
+                    <tbody id="address-list">
+                        <tr>
+                            <td>home</td>
+                            <td>receiver1</td>
+                            <td>beijing city</td>
+                            <td>15801320882</td>
+                            <td><a class="btn btn-xs btn-info"><span class="fa fa-edit"></span>modify</a></td>
+                            <td><a class="btn btn-xs add-del btn-info"><span class="fa fa-trash-o"></span>delete</a></td>
+                            <td><a class="btn btn-xs add-def btn-default">set default</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a href="addAddress.html" class="btn btn-sm btn-primary"><span class="fa fa-plus"></span>add new address</a>
             </div>
         </div>
     </div>
@@ -204,48 +188,97 @@
 </footer>
 
 <script type="text/javascript">
-    $(document).ready(function () {
-        $.ajax({
-            url: "/user/getUserById",
-            type: "GET",
-            dataType: "json",
-            success: function (res) {
-                if (res.state == 200) {
-                    $("#username").val(res.data.username);
-                    $("#phone").val(res.data.phone);
-                    $("#email").val(res.data.email);
-                    let radio = res.data.gender == 0 ? $("#gender-female") : $("#gender-male");
-                    console.log(radio);
-                    radio.prop("checked", "checked");
-                } else {
-                    alert("get user failed" + res.message);
-                }
+    $(function () {
+        $(".add-del").click(function () {
+            if (confirm('Are you sure to delete this?')) {
+                location.href = "address.html";
             }
         });
-    });
 
-    $("#changeUserInfoButton").click(function () {
-        console.log($("#changeUserInfoForm").serialize());
+        $(".add-def").click(function () {
+            $(".add-def").show();
+            $(this).hide();
+        });
+        $(".add-def:eq(0)").hide();
+
+        displayAddressList();
+    })
+
+    function setDefault(aid) {
         $.ajax({
-            url: "/user/updateUserInfo",
+            url: "/address/" + aid + "/setDefault",
             type: "POST",
-            data: $("#changeUserInfoForm").serialize(),
-            dataType: "json",
+            dataType: "JSON",
             success: function (res) {
                 if (res.state == 200) {
-                    alert("modify user info success");
-                    location.href = "login.html";
+                    displayAddressList();
                 } else {
-                    alert("modify user info failed", res.message());
+                    alert("failed when setup default address!" + res.message);
                 }
             },
             error: function (err) {
                 alert("login info expires, please login again, response code is :", err.status);
                 location.href = "login.html";
             }
-        })
-    });
-</script>
+        });
+    }
 
+    function deleteByAid(aid) {
+        $.ajax({
+            url: "/address/" + aid + "/delete",
+            type: "POST",
+            dataType: "JSON",
+            success: function (res) {
+                if (res.state == 200) {
+                    displayAddressList();
+                } else {
+                    alert("failed when delete address!" + res.message);
+                }
+            },
+            error: function (err) {
+                alert("login info expires, please login again, response code is :", err.status);
+                location.href = "login.html";
+            }
+        });
+    }
+
+    /**
+     * display address list
+     */
+    function displayAddressList() {
+        $("#address-list").empty();
+        $.ajax({
+            url: "/address/getAddressList",
+            type: "GET",
+            dataType: "JSON",
+            success: function (res) {
+                let list = res.data;
+                for (let i = 0; i < list.length; i++) {
+                    console.log(list[i]);
+                    let record = list[i];
+                    let address = '<tr>'
+                        + '<td>#{tag}</td>'
+                        + '<td>#{name}</td>'
+                        + '<td>#{province}#{city}#{area}#{address}</td>'
+                        + '<td>#{phone}</td>'
+                       /* + '<td><a class="btn btn-xs btn-info"><span class="fa fa-edit"></span>modify</a></td>'*/
+                        + '<td><a onclick="deleteByAid(#{aid})" class="btn btn-xs add-del btn-info"><span class="fa fa-trash-o"></span>delete</a></td>'
+                        + '<td><a onclick="setDefault(#{aid})" class="btn btn-xs add-def btn-default">setdefault</a></td>'
+                        + '</tr>';
+                    address = address.replace(/#{aid}/g, record.aid);
+                    address = address.replace(/#{tag}/g, record.tag);
+                    address = address.replace(/#{name}/g, record.name);
+                    address = address.replace(/#{province}/g, record.provinceName);
+                    address = address.replace(/#{city}/g, record.cityName);
+                    address = address.replace(/#{area}/g, record.areaName);
+                    address = address.replace(/#{address}/g, record.address);
+                    address = address.replace(/#{phone}/g, record.phone);
+                    $("#address-list").append(address);
+                    $(".add-def:eq(0)").hide();
+                }
+            }
+        });
+    }
+</script>
 </body>
 </html>

@@ -23,14 +23,12 @@
      keyProperty means the property of object, not the name of column in the table-->
     <insert id="insert" useGeneratedKeys="true" keyProperty="aid">
         <![CDATA[
-        INSERT INTO
-            t_address (uid, name, province_name, province_code,
+        INSERT INTO t_address (uid, name, province_name, province_code,
                                city_name, city_code, area_name, area_code, zip,
                                address, phone, tel, tag, is_default, created_user,
-                       created_time, modified_user,
+                               created_time, modified_user,
                                modified_time)
-        VALUES
-               (#{uid}, #{name}, #{provinceName}, #{provinceCode},
+        VALUES (#{uid}, #{name}, #{provinceName}, #{provinceCode},
                 #{cityName}, #{cityCode}, #{areaName}, #{areaCode},
                 #{zip}, #{address}, #{phone}, #{tel}, #{tag}, #{primaryAddress}, #{createdUser},
                 #{createdTime},
@@ -40,10 +38,66 @@
 
     <select id="countByUid" resultType="java.lang.Integer">
         <![CDATA[
-            SELECT
-                count(1)
-            FROM t_address
-            WHERE uid = #{uid}
+        SELECT count(1)
+        FROM t_address
+        WHERE uid = #{uid}
+        ]]>
+    </select>
+
+    <select id="findAddressesByUid" parameterType="java.lang.Integer"
+            resultMap="AddressMap">
+        <![CDATA[
+        SELECT *
+        FROM t_address
+        WHERE uid = #{uid}
+        ORDER BY is_default DESC,
+                 created_time DESC
+        ]]>
+    </select>
+
+    <update id="updateToDefaultByAid" parameterType="com.felix.shoppingcentre.entity.Address">
+        <![CDATA[
+        UPDATE
+            t_address
+        SET is_default=1,
+            modified_user=#{modifiedUser},
+            modified_time=#{modifiedTime}
+        WHERE aid = #{aid}
+        ]]>
+    </update>
+    <update id="updateUserAddressesToNonDefault" parameterType="com.felix.shoppingcentre.entity.Address">
+        <![CDATA[
+        UPDATE
+            t_address
+        SET is_default=0,
+            modified_user=#{modifiedUser},
+            modified_time=#{modifiedTime}
+        WHERE uid = #{uid}
+        ]]>
+    </update>
+    <select id="findAddressByAid" parameterType="java.lang.Integer" resultMap="AddressMap">
+        <![CDATA[
+        SELECT *
+        FROM t_address
+        WHERE aid = #{aid}
+        ]]>
+    </select>
+
+    <delete id="deleteAddressByAid" parameterType="java.lang.Integer">
+        <![CDATA[
+        DELETE
+        FROM t_address
+        WHERE aid = #{aid}
+        ]]>
+    </delete>
+
+    <select id="findLastModified" parameterType="java.lang.Integer" resultMap="AddressMap">
+        <![CDATA[
+        SELECT *
+        FROM t_address
+        WHERE uid = #{uid}
+        ORDER BY modified_time DESC
+        LIMIT 0, 1
         ]]>
     </select>
 
