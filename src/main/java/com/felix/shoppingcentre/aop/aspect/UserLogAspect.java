@@ -38,8 +38,9 @@ public class UserLogAspect {
 
     /**
      * save log
-     * @param point
-     * @param throughTime
+     *
+     * @param point       ProceedingJoinPoint object
+     * @param throughTime duration time
      */
     @Async
     public void saveLog(ProceedingJoinPoint point, long throughTime) {

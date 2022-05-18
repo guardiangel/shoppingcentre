@@ -28,8 +28,8 @@ public class UserController extends BaseController {
      * when register a new user, save the log,
      * see {@link com.felix.shoppingcentre.aop.aspect.UserLogAspect} to get more details
      *
-     * @param user
-     * @return
+     * @param user user
+     * @return JsonResult
      */
     @PostMapping(value = "/register")
     @UserLoginAnnotation
@@ -52,7 +52,7 @@ public class UserController extends BaseController {
                                   @RequestParam(value = "password") String password,
                                   HttpSession session) {
         JsonResult<User> result = new JsonResult<>(ConstantUtils.SUCCESS);
-        User user = null;
+        User user;
         try {
             user = userService.login(username, password);
         } catch (ServiceException e) {

@@ -33,8 +33,8 @@ public enum ExceptionResponseCode implements ResponseCodeInterface {
     ADDRESS_DELETE_ERROR(80006, "error when delete one address"),
     ;
 
-    int code;
-    String msg;
+    final int code;
+    final String msg;
 
     ExceptionResponseCode(int code, String msg) {
         this.code = code;

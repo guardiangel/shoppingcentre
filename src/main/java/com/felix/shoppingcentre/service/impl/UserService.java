@@ -87,7 +87,7 @@ public class UserService implements IUserService {
 
         Optional<UserJpaEntity> existUserJpaEntityOptional = userRepository.findById(uid);
 
-        if (!existUserJpaEntityOptional.isPresent()) {
+        if (existUserJpaEntityOptional.isEmpty()) {
             throw new ServiceException(ExceptionResponseCode.USER_NOT_FOUND);
         }
 

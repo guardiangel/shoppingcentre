@@ -49,7 +49,7 @@ public class UploadController extends BaseController {
             result.setMessage(ExceptionResponseCode.FILE_NULL.getMsg());
             return result;
         }
-        if (file.getSize() > Integer.valueOf(Integer.valueOf(AVATAR_MAX_SIZE))) {
+        if (file.getSize() > Integer.valueOf(AVATAR_MAX_SIZE)) {
             result.setState(ExceptionResponseCode.FILE_OVER_MAX_SIZE.getCode());
             result.setMessage(ExceptionResponseCode.FILE_OVER_MAX_SIZE.getMsg());
             return result;
@@ -57,9 +57,7 @@ public class UploadController extends BaseController {
         String contentType = file.getContentType();
         if (!avatarListType.contains(contentType)) {
             StringBuilder stringBuilder = new StringBuilder("not accepted file type, accepted types are:\n");
-            avatarListType.forEach((value) -> {
-                stringBuilder.append(value).append("\n");
-            });
+            avatarListType.forEach((value) -> stringBuilder.append(value).append("\n"));
             result.setState(ExceptionResponseCode.FILE_TYPE_ERROR.getCode());
             result.setMessage(stringBuilder.toString());
             return result;

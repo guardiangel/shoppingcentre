@@ -5,7 +5,7 @@
 <mapper namespace="com.felix.shoppingcentre.mapper.UserMapper">
 
     <resultMap id="UserMap" type="com.felix.shoppingcentre.entity.User">
-        <id column="uid" property="uid"></id>
+        <id column="uid" property="uid"/>
         <result column="is_delete" property="delete"/>
         <result column="created_user" property="createdUser"/>
         <result column="created_time" property="createdTime"/>
@@ -42,14 +42,14 @@
 
     <select id="findByUsername" resultMap="UserMap">
         SELECT
-        <include refid="allUserColumns"></include>
+        <include refid="allUserColumns"/>
         FROM t_user
         WHERE username = #{username}
     </select>
 
     <select id="findByUid" resultMap="UserMap">
         SELECT
-        <include refid="allUserColumns"></include>
+        <include refid="allUserColumns"/>
         FROM t_user
         WHERE uid = #{uid}
     </select>
