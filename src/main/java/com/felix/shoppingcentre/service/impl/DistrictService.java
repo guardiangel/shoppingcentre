@@ -1,7 +1,8 @@
-package com.felix.shoppingcentre.service;
+package com.felix.shoppingcentre.service.impl;
 
 import com.felix.shoppingcentre.entity.District;
 import com.felix.shoppingcentre.mapper.DistrictMapper;
+import com.felix.shoppingcentre.service.IDistrictService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

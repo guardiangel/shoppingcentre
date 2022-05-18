@@ -22,17 +22,16 @@ public enum ExceptionResponseCode implements ResponseCodeInterface {
     FILE_NULL(70000, "file is null, please choose a file"),
     FILE_OVER_MAX_SIZE(70001, "file size is over the limitation"),
     FILE_TYPE_ERROR(70002, "file type can't be accepted"),
-
     FILE_STATE_ABNORMAL(700003, "file state error, maybe it's moved or deleted"),
     FILE_UPLOAD_ERROR(70004, "there is an error when uploading avata, please try later"),
+
     ADDRESS_OVER_LIMIT(80001, "address count has exceeded the limit"),
     ADDRESS_NOT_FOUND(80002, " address not found"),
     ADDRESS_ACCESS_DENIED(80003, "not legal request to access the modification"),
     ADDRESS_SETTONODEFAULT_ERROR(80004, "error when set all addresses to non-default"),
     ADDRESS_SETUP_DEFAULT(80005, "error when set to defualt"),
-    ADDRESS_DELETE_ERROR(80006, "error when delete one address"),;
-
-
+    ADDRESS_DELETE_ERROR(80006, "error when delete one address"),
+    ;
 
     int code;
     String msg;
@@ -51,4 +50,4 @@ public enum ExceptionResponseCode implements ResponseCodeInterface {
     public String getMsg() {
         return msg;
     }
-    }
+}

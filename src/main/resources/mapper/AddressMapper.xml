@@ -19,6 +19,8 @@
         <result column="modified_time" property="modifiedTime"/>
     </resultMap>
 
+    <sql id="allColumns">aid,uid,name,province_name,province_code,city_name,city_code,area_name,area_code,zip,address,phone,tel,tag,is_default,created_user,created_time,modified_user,modified_time</sql>
+
     <!--useGeneratedKeys allows JDBC create primary key,
      keyProperty means the property of object, not the name of column in the table-->
     <insert id="insert" useGeneratedKeys="true" keyProperty="aid">
@@ -46,13 +48,12 @@
 
     <select id="findAddressesByUid" parameterType="java.lang.Integer"
             resultMap="AddressMap">
-        <![CDATA[
-        SELECT *
+        SELECT
+        <include refid="allColumns"/>
         FROM t_address
         WHERE uid = #{uid}
         ORDER BY is_default DESC,
-                 created_time DESC
-        ]]>
+        created_time DESC
     </select>
 
     <update id="updateToDefaultByAid" parameterType="com.felix.shoppingcentre.entity.Address">
@@ -76,11 +77,10 @@
         ]]>
     </update>
     <select id="findAddressByAid" parameterType="java.lang.Integer" resultMap="AddressMap">
-        <![CDATA[
-        SELECT *
+        SELECT
+        <include refid="allColumns"/>
         FROM t_address
         WHERE aid = #{aid}
-        ]]>
     </select>
 
     <delete id="deleteAddressByAid" parameterType="java.lang.Integer">
@@ -92,13 +92,12 @@
     </delete>
 
     <select id="findLastModified" parameterType="java.lang.Integer" resultMap="AddressMap">
-        <![CDATA[
-        SELECT *
+        SELECT
+        <include refid="allColumns"/>
         FROM t_address
         WHERE uid = #{uid}
         ORDER BY modified_time DESC
         LIMIT 0, 1
-        ]]>
     </select>
 
 </mapper>

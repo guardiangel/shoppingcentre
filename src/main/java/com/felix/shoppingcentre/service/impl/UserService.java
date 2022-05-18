@@ -27,17 +27,11 @@ public class UserService implements IUserService {
     @Autowired
     private UserRepository userRepository;
 
-    /**
-     * @param user
-     */
     @Override
     @Transactional
     public void register(User user) {
         String username = user.getUsername();
         User existUser = userMapper.findByUsername(username);
-        /*UserJpaEntity userJpaEntity = userRepository.findByUsername(username);
-        User existUser = new User();
-        BeanUtils.copyProperties(userJpaEntity, existUser);*/
         if (existUser != null) {
             throw new ServiceException(ExceptionResponseCode.USER_REPEAT);
         }
@@ -81,14 +75,15 @@ public class UserService implements IUserService {
 
     /**
      * use jpa update password
-     * @param uid
-     * @param username
-     * @param originalPassword
-     * @param newPassword
+     *
+     * @param uid              userid
+     * @param username         username
+     * @param originalPassword original password
+     * @param newPassword      new passwrod
      */
     @Override
     public void updatePassword(Integer uid, String username,
-                                  String originalPassword, String newPassword) {
+                               String originalPassword, String newPassword) {
 
         Optional<UserJpaEntity> existUserJpaEntityOptional = userRepository.findById(uid);
 

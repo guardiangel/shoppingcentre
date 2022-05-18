@@ -64,6 +64,8 @@ public class AddressController extends BaseController {
         try {
             addressService.addNewAddress(username, address);
         } catch (ServiceException e) {
+            log.error("exception when add a new address, {},{}",
+                    e.getMessageCode(), e.getMessageDetail());
             result.setState(e.getMessageCode());
             result.setMessage(e.getMessageDetail());
         }
@@ -85,6 +87,8 @@ public class AddressController extends BaseController {
         try {
             addressService.updateUserAddressesToDefault(address);
         } catch (ServiceException e) {
+            log.error("exception when set user's address to default, {},{}",
+                    e.getMessageCode(), e.getMessageDetail());
             result.setState(e.getMessageCode());
             result.setMessage(e.getMessageDetail());
         }
@@ -99,8 +103,10 @@ public class AddressController extends BaseController {
         Integer uid = getUidFromSession(session);
         String username = getUsernameFromSession(session);
         try {
-           addressService.deleteAddress(aid, uid, username);
+            addressService.deleteAddress(aid, uid, username);
         } catch (ServiceException e) {
+            log.error("exception when delete address {},{}",
+                    e.getMessageCode(), e.getMessageDetail());
             result.setState(e.getMessageCode());
             result.setMessage(e.getMessageDetail());
         }

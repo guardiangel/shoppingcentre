@@ -38,6 +38,8 @@ public class UserController extends BaseController {
         try {
             userService.register(user);
         } catch (ServiceException e) {
+            log.error("exception when registration, {}, {}",
+                    e.getMessageCode(), e.getMessageDetail());
             result.setState(e.getMessageCode());
             result.setMessage(e.getMessageDetail());
             return result;
@@ -54,6 +56,8 @@ public class UserController extends BaseController {
         try {
             user = userService.login(username, password);
         } catch (ServiceException e) {
+            log.error("exception when user login, {},{}",
+                    e.getMessageCode(), e.getMessageDetail());
             result.setState(e.getMessageCode());
             result.setMessage(e.getMessageDetail());
             return result;
@@ -80,6 +84,8 @@ public class UserController extends BaseController {
         try {
             userService.updatePassword(uid, username, oldPassword, newPassword);
         } catch (ServiceException e) {
+            log.error("exception when update user's password, {}, {}",
+                    e.getMessageCode(), e.getMessageDetail());
             result.setState(e.getMessageCode());
             result.setMessage(e.getMessageDetail());
             return result;
@@ -94,6 +100,8 @@ public class UserController extends BaseController {
         try {
             result.setData(userService.findByUserId(uid));
         } catch (ServiceException e) {
+            log.error("exception when find user based on userid, {}, {}",
+                    e.getMessageCode(), e.getMessageDetail());
             result.setState(e.getMessageCode());
             result.setMessage(e.getMessageDetail());
             return result;
@@ -112,6 +120,8 @@ public class UserController extends BaseController {
         try {
             userService.updateUserInfo(user);
         } catch (ServiceException e) {
+            log.error("exception when update user's info, {}, {}",
+                    e.getMessageCode(), e.getMessageDetail());
             result.setState(e.getMessageCode());
             result.setMessage(e.getMessageDetail());
         }

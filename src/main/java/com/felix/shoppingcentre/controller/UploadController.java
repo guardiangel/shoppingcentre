@@ -49,7 +49,7 @@ public class UploadController extends BaseController {
             result.setMessage(ExceptionResponseCode.FILE_NULL.getMsg());
             return result;
         }
-        if (file.getSize() > Integer.valueOf(AVATAR_MAX_SIZE)) {
+        if (file.getSize() > Integer.valueOf(Integer.valueOf(AVATAR_MAX_SIZE))) {
             result.setState(ExceptionResponseCode.FILE_OVER_MAX_SIZE.getCode());
             result.setMessage(ExceptionResponseCode.FILE_OVER_MAX_SIZE.getMsg());
             return result;
@@ -86,10 +86,12 @@ public class UploadController extends BaseController {
         try {
             file.transferTo(new File(dir, fullFilename));
         } catch (IllegalStateException e) {
+            log.error("IllegalStateException when transfer file {}", e.getCause());
             result.setState(ExceptionResponseCode.FILE_STATE_ABNORMAL.getCode());
             result.setMessage(ExceptionResponseCode.FILE_STATE_ABNORMAL.getMsg());
             return result;
         } catch (IOException e) {
+            log.error("IOException when transfer file {}", e.getCause());
             result.setState(ExceptionResponseCode.FILE_UPLOAD_ERROR.getCode());
             result.setMessage(ExceptionResponseCode.FILE_UPLOAD_ERROR.getMsg());
             return result;
@@ -106,6 +108,8 @@ public class UploadController extends BaseController {
         try {
             userService.updateUserAvatar(user);
         } catch (ServiceException e) {
+            log.error("error when updatate user's photo {},{}",
+                    e.getMessageCode(), e.getMessageDetail());
             result.setState(e.getMessageCode());
             result.setMessage(e.getMessageDetail());
             return result;

@@ -24,46 +24,34 @@
         ]]>
     </insert>
 
+    <sql id="allUserColumns">
+        uid,
+        username,
+        password,
+        salt,
+        phone,
+        email,
+        gender,
+        avatar,
+        is_delete,
+        created_user,
+        created_time,
+        modified_user,
+        modified_time
+    </sql>
+
     <select id="findByUsername" resultMap="UserMap">
-        <![CDATA[
         SELECT
-               uid,
-               username,
-               password,
-               salt,
-               phone,
-               email,
-               gender,
-               avatar,
-               is_delete,
-               created_user,
-               created_time,
-               modified_user,
-               modified_time
+        <include refid="allUserColumns"></include>
         FROM t_user
         WHERE username = #{username}
-        ]]>
     </select>
 
     <select id="findByUid" resultMap="UserMap">
-        <![CDATA[
         SELECT
-               uid,
-               username,
-               password,
-               salt,
-               phone,
-               email,
-               gender,
-               avatar,
-               is_delete,
-               created_user,
-               created_time,
-               modified_user,
-               modified_time
+        <include refid="allUserColumns"></include>
         FROM t_user
         WHERE uid = #{uid}
-        ]]>
     </select>
 
     <!--update user's passwors-->
@@ -94,8 +82,7 @@
     <update id="updateUserAvatar" parameterType="com.felix.shoppingcentre.entity.User">
         <![CDATA[
         UPDATE t_user
-        SET
-            avatar=ifnull(#{avatar}, avatar),
+        SET avatar=ifnull(#{avatar}, avatar),
             modified_user=#{modifiedUser},
             modified_time=#{modifiedTime}
         WHERE uid = #{uid}

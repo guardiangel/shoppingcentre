@@ -42,7 +42,7 @@ public class UserLogAspect {
      * @param throughTime
      */
     @Async
-    private void saveLog(ProceedingJoinPoint point, long throughTime) {
+    public void saveLog(ProceedingJoinPoint point, long throughTime) {
         MethodSignature methodSignature = (MethodSignature) point.getSignature();
         Method method = methodSignature.getMethod();
         UserLoginAnnotation userLoginAnnotation = method.getAnnotation(UserLoginAnnotation.class);
