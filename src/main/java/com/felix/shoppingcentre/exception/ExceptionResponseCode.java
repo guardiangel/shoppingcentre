@@ -8,7 +8,6 @@ public enum ExceptionResponseCode implements ResponseCodeInterface {
     DATA_VALIDATION(99998, ""),
     SUCCESS(0, "success"),
     UNKNOW_ERROR(99999, "unknown exception, please contact administrator"),
-    GOODS_NO_FOUND(40001, "goods not found"),
 
     USER_DELETED(50000, "user has been deleted"),
     USER_NOT_FOUND(50001, "user not found"),
@@ -17,7 +16,6 @@ public enum ExceptionResponseCode implements ResponseCodeInterface {
     PASSWORD_ERROR(60001, "password doesn't match the existing one"),
     PASSWORD_EQUAL_ORIGINAL(60002, "password can't equal to original one"),
     PASSWORD_INPUT_WRONG(60003, "the original password you input don't match existing one"),
-
 
     FILE_NULL(70000, "file is null, please choose a file"),
     FILE_OVER_MAX_SIZE(70001, "file size is over the limitation"),
@@ -31,7 +29,8 @@ public enum ExceptionResponseCode implements ResponseCodeInterface {
     ADDRESS_SETTONODEFAULT_ERROR(80004, "error when set all addresses to non-default"),
     ADDRESS_SETUP_DEFAULT(80005, "error when set to defualt"),
     ADDRESS_DELETE_ERROR(80006, "error when delete one address"),
-    ;
+
+    PRODUCT_NOT_FOUND(400001, "product not found"),;
 
     final int code;
     final String msg;
