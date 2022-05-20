@@ -5,7 +5,7 @@
 <mapper namespace="com.felix.shoppingcentre.mapper.AddressMapper">
     <resultMap id="AddressMap" type="com.felix.shoppingcentre.entity.Address">
         <id column="aid" property="aid"/>
-        <id column="uid" property="uid"/>
+        <result column="uid" property="uid"/>
         <result column="province_code" property="provinceCode"/>
         <result column="province_name" property="provinceName"/>
         <result column="city_code" property="cityCode"/>

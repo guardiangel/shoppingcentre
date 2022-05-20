@@ -16,7 +16,7 @@ $(function () {
     //add one to number of purchases
     $("#numUp").click(function () {
         let num = parseInt($("#num").val());
-        $("#num").val(num++);
+        $("#num").val(num + 1);
     });
 
     //minus one to number of purchases
@@ -25,7 +25,7 @@ $(function () {
         if (1 == num) {
             return;
         }
-        $("#num").val(num--);
+        $("#num").val(num-1);
     });
 
     //go to cart page

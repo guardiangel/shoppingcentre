@@ -17,19 +17,35 @@ public class Product implements Serializable {
      * product type
      */
     private String itemType;
+    /**
+     * product title
+     */
     private String title;
     /**
      * key feature for selling
      */
     private String sellPoint;
+    /**
+     * price
+     */
     private Long price;
+    /**
+     * product number
+     */
     private Integer num;
+    /**
+     * product image
+     */
     private String image;
     /**
      * 1 on sell 2 remove 3 delete
      */
     private Integer status;
+    /**
+     * product priority
+     */
     private Integer priority;
+
     private String createdUser;
     private Date createdTime;
     private String modifiedUser;

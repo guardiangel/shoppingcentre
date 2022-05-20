@@ -82,7 +82,7 @@
         <div class="col-md-6">
             <div data="1" class="img-big move-img col-md-12">
                 <img id="product-image-1-big" src="../images/portal/11DELLran7000R1605Ssilvery/1_big.png"
-                     class="img-responsive" />
+                     class="img-responsive"/>
             </div>
             <div data="2" class="img-big move-img col-md-12">
                 <img id="product-image-2-big" src="../images/portal/11DELLran7000R1605Ssilvery/2_big.png"
@@ -145,10 +145,10 @@
                     <input class="btn btn-primary btn-lg btn-block" type="button" value="Buy Now">
                 </div>
                 <div class="col-md-12 form-space">
-                    <button id="btn-add-to-cart" type="button" class="btn btn-default go-cart"><span
+                    <button id="addToCartButton" type="button" class="btn btn-default go-cart"><span
                             class="fa fa-cart-plus"></span> add to cart
                     </button>
-                    <button id="btn-add-to-collect" type="button" class="btn btn-default"><span
+                    <button id="addToCollectButton" type="button" class="btn btn-default"><span
                             class="fa fa-heart-o"></span> add to collection
                     </button>
                 </div>
@@ -295,5 +295,32 @@
             }
         });
     });
+
+    //add to cart
+    $("#addToCartButton").click(function () {
+        $.ajax({
+            url: "/carts/addToCart",
+            type: "POST",
+            data: {
+                pid: id,
+                amount: $("#num").val(),
+            },
+            dataType: "JSON",
+            success: function (res) {
+                if (res.state == 200) {
+                    alert("add cart successfully");
+                    //location.href = "";
+                } else {
+                    alert("add cart failed, the reason is :" + res.message);
+                }
+                alert(location.href);
+            },
+            error: function (err) {
+                alert("login info expires, please login again, response code is :", err.status);
+                location.href = "login.html";
+            }
+        });
+    });
+
 </script>
 </html>

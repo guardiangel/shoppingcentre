@@ -30,7 +30,10 @@ public enum ExceptionResponseCode implements ResponseCodeInterface {
     ADDRESS_SETUP_DEFAULT(80005, "error when set to defualt"),
     ADDRESS_DELETE_ERROR(80006, "error when delete one address"),
 
-    PRODUCT_NOT_FOUND(400001, "product not found"),;
+    PRODUCT_NOT_FOUND(400001, "product not found"),
+
+    CART_INSERT_ERROR(30001, "exception when add cart"),
+    CART_UPATE_ERROR(30002, "exception when update cart");
 
     final int code;
     final String msg;
