@@ -56,8 +56,7 @@ public class CartService implements ICartService {
 
     @Override
     public List<CartVo> findCartVoByUid(Integer uid) {
-        List<CartVo> cartVoList = cartMapper.findCartVoByUid(uid);
-        return cartVoList;
+        return cartMapper.findCartVoByUid(uid);
     }
 
     @Override
@@ -70,7 +69,7 @@ public class CartService implements ICartService {
             throw new ServiceException(ExceptionResponseCode.CART_ACCESS_DENIED);
         }
 
-        if (number != cart.getNum()) {
+        if (!number.equals(cart.getNum())) {
             throw new ServiceException(ExceptionResponseCode.PRODUCT_NUM_ERROR);
         }
 
@@ -107,7 +106,8 @@ public class CartService implements ICartService {
         List<CartVo> list = cartMapper.findCartVoByCids(cids);
         List<CartVo> result = null;
         if (!ObjectUtils.isEmpty(list)) {
-            result = list.stream().filter(cartVo -> cartVo.getUid() != uid).collect(Collectors.toList());
+            result = list.stream().
+                    filter(cartVo -> !cartVo.getUid().equals(uid)).collect(Collectors.toList());
         }
         return result;
     }
