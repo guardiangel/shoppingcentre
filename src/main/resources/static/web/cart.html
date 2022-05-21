@@ -22,7 +22,7 @@
 <header class="header">
     <div class="row">
         <div class="col-md-3">
-            <a href="index.html">
+            <a href="main.html">
                 <img src="../images/index/demo.png" alt="">
             </a>
         </div>
@@ -80,14 +80,14 @@
             </div>
 
             <div class="panel-body">
-                <form action=""  role="form">
+                <form action="" role="form">
                     <table class="cart-table">
                         <thead>
                         <tr>
                             <th style="width: 8%">
                                 <input type="checkbox" class="ckall" onclick="checkAll(this)">selectAll
                             </th>
-                            <th ></th>
+                            <th></th>
                             <th style="width: 29%">product</th>
                             <th style="width: 11%">price</th>
                             <th style="width: 15%">num</th>
@@ -105,10 +105,10 @@
                             </td>
                             <td></td>
                             <td>
-                                <input type="button" value="-" class="num-btn" onclick="reduceNum(1)"/>
+                                <input type="button" value="-" class="num-btn" onclick=""/>
                                 <input id="goodsCount1" type="text" size="2" readonly="readonly"
                                        class="num-text" value="1">
-                                <input class="num-btn" type="button" value="+" onclick="addNum(1)"/>
+                                <input class="num-btn" type="button" value="+" onclick=""/>
                             </td>
                             <td><span id="goodsCast1"></span></td>
                             <td>
@@ -119,8 +119,8 @@
                         </tbody>
                     </table>
                     <div class="total-bar">
-                        <a href="javascript:selDelCart()" class="cart-del-sel btn btn-default btn-xs">delete selected
-                            produts</a>
+                        <!--<a href="javascript:selDelCart()" class="cart-del-sel btn btn-default btn-xs">delete selected
+                            produts</a>-->
                         <span class="pull-right">selected products
                         <span id="selectCount">0</span> total price¥
                         <span id="selectTotal">0</span>rmb
@@ -179,6 +179,64 @@
         showCartList();
     })
 
+    //delete item based on cart id
+    function delCartItem(cid) {
+        if (confirm("You want to delete this")) {
+            $.ajax({
+                url: "/carts/" + cid + "/delete",
+                type: "POST",
+                dataType: "JSON",
+
+                success: function (res) {
+                    if (res.state == 200) {
+                        alert("delete successfully");
+                        showCartList();
+                    } else {
+                        alert("delete failed:" + res.message);
+                    }
+                },
+                error: function (err) {
+                    alert("login info expires, please login again, response code is :", err.status);
+                    location.href = "login.html";
+                }
+            });
+        }
+
+    }
+
+    /**
+     *  not a good solution, just for demo.
+     * because when click button "+" or "-", it will send request to server
+     * @param cid cart id
+     * @param operator + or -
+     */
+    function adjustCartNum(cid, operator) {
+        $.ajax({
+            url: "/carts/" + cid + "/addCartNum",
+            type: "POST",
+            dataType: "JSON",
+            data: {
+                num: ($("#num-" + cid).val()),
+                operator: operator,
+            },
+            success: function (res) {
+                if (res.state == 200) {
+                    let data = res.data;
+                    $("#num-" + cid).val(data);
+                    let price = $("#price-" + cid).html();
+                    let totalPrice = price * data;
+                    $("#total-price-" + cid).html(totalPrice);
+                } else {
+                    alert("add cart num failed:" + res.message);
+                }
+            },
+            error: function (err) {
+                alert("login info expires, please login again, response code is :", err.status);
+                location.href = "login.html";
+            }
+        });
+    }
+
     function showCartList() {
         $("#cart-list").empty();
         $.ajax({
@@ -192,11 +250,11 @@
                         + '<input name="cids" value="#{cid}" type="checkbox" class="ckitem" />'
                         + '</td>' + '<td><img src="..#{image}collect.png" class="img-responsive" /></td>'
                         + '<td>#{title}#{msg}</td>' + '<td>¥<span id="price-#{cid}">#{realPrice}</span></td>'
-                        + '<td>' + '<input type="button" value="-" class="num-btn" onclick="reduceNum(1)" />'
+                        + '<td>' + '<input type="button" value="-" class="num-btn" onclick="adjustCartNum(#{cid}, this.value)" />'
                         + '<input id="num-#{cid}" type="text" size="2" readonly="readonly" class="num-text" value="#{num}">'
-                        + '<input class="num-btn" type="button" value="+" onclick="addNum(#{cid})" />'
+                        + '<input class="num-btn" type="button" value="+" onclick="adjustCartNum(#{cid}, this.value)" />'
                         + '</td>' + '<td>¥<span id="total-price-#{cid}">#{totalPrice}</span></td>'
-                        + '<td>' + '<input type="button" onclick="delCartItem(this)" class="cart-del btn btn-default btn-xs" value="delete" />'
+                        + '<td>' + '<input type="button" onclick="delCartItem(#{cid})" class="cart-del btn btn-default btn-xs" value="delete" />'
                         + '</td>' + '</tr>';
                     tr = tr.replace(/#{cid}/g, list[i].cid);
                     tr = tr.replace(/#{title}/g, list[i].title);

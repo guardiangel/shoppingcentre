@@ -35,10 +35,33 @@ public interface CartMapper {
 
     /**
      * find all product based on user id
+     *
      * @param uid user id
-     * @return
-     * cartvo list
+     * @return cartvo list
      */
     List<CartVo> findCartVoByUid(Integer uid);
 
+    /**
+     * find cart based on cart id
+     *
+     * @param cid cart id
+     * @return cart object
+     */
+    Cart findCartByCid(Integer cid);
+
+    /**
+     * delete item by cart id
+     *
+     * @param cid cart id
+     * @return affected rows
+     */
+    Integer deleteCartByCid(Integer cid);
+
+    /**
+     * find all products based on cart id array
+     *
+     * @param cids selected ids of cart
+     * @return cartvo list
+     */
+    List<CartVo> findCartVoByCids(Integer[] cids);
 }

@@ -62,6 +62,7 @@
     </select>
 
     <select id="findCartVoByUid" parameterType="java.lang.Integer" resultType="com.felix.shoppingcentre.vo.CartVo">
+        <![CDATA[
         SELECT c.cid,
                c.uid,
                c.pid,
@@ -76,6 +77,44 @@
              ON (c.pid = p.id)
         WHERE uid = #{uid}
         ORDER BY c.created_time DESC
+        ]]>
     </select>
 
+    <select id="findCartByCid" parameterType="java.lang.Integer" resultMap="CartMap">
+        SELECT
+        <include refid="allCartColumns"/>
+        FROM
+        t_cart
+        WHERE
+        cid=#{cid}
+    </select>
+
+    <delete id="deleteCartByCid" parameterType="java.lang.Integer">
+        <![CDATA[
+        DELETE
+        FROM t_cart
+        WHERE cid = #{cid};
+        ]]>
+    </delete>
+
+    <select id="findCartVoByCids" resultType="com.felix.shoppingcentre.vo.CartVo">
+        SELECT c.cid,
+        c.uid,
+        c.pid,
+        c.price,
+        c.num,
+        p.title,
+        p.price as realPrice,
+        p.image
+        FROM t_cart c
+        LEFT JOIN
+        t_product p
+        ON (c.pid = p.id)
+        WHERE cid IN (
+        <foreach collection="array" item="cid" separator=",">
+            #{cid}
+        </foreach>
+        )
+        ORDER BY c.created_time DESC
+    </select>
 </mapper>

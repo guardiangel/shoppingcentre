@@ -8,6 +8,8 @@ public enum ExceptionResponseCode implements ResponseCodeInterface {
     DATA_VALIDATION(99998, ""),
     SUCCESS(0, "success"),
     UNKNOW_ERROR(99999, "unknown exception, please contact administrator"),
+    DATA_TRANSFER_ERROR(99997, "exception when transfer String to Integer"),
+    COMMON_INPUT_ERROR(99996, "input data error"),
 
     USER_DELETED(50000, "user has been deleted"),
     USER_NOT_FOUND(50001, "user not found"),
@@ -31,9 +33,13 @@ public enum ExceptionResponseCode implements ResponseCodeInterface {
     ADDRESS_DELETE_ERROR(80006, "error when delete one address"),
 
     PRODUCT_NOT_FOUND(400001, "product not found"),
+    PRODUCT_NUM_ERROR(400002, "the number of product isn't equal to existing number"),
 
     CART_INSERT_ERROR(30001, "exception when add cart"),
-    CART_UPATE_ERROR(30002, "exception when update cart");
+    CART_UPATE_ERROR(30002, "exception when update cart"),
+    CART_NOT_FOUND(30003, "car not found based on specified id"),
+    CART_ACCESS_DENIED(30004, "not a normal request, uid is different from existing one"),
+    CART_DELETE_ERROR(30005, "exception when delete item by cart id"),;
 
     final int code;
     final String msg;

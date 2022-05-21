@@ -13,6 +13,7 @@ import org.springframework.util.ObjectUtils;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CartService implements ICartService {
@@ -57,6 +58,58 @@ public class CartService implements ICartService {
     public List<CartVo> findCartVoByUid(Integer uid) {
         List<CartVo> cartVoList = cartMapper.findCartVoByUid(uid);
         return cartVoList;
+    }
+
+    @Override
+    public Integer AddCartNum(Integer cid, Integer uid, String username, Integer number, String operator) {
+        Cart cart = cartMapper.findCartByCid(cid);
+        if (ObjectUtils.isEmpty(cart)) {
+            throw new ServiceException(ExceptionResponseCode.CART_NOT_FOUND);
+        }
+        if (!uid.equals(cart.getUid())) {
+            throw new ServiceException(ExceptionResponseCode.CART_ACCESS_DENIED);
+        }
+
+        if (number != cart.getNum()) {
+            throw new ServiceException(ExceptionResponseCode.PRODUCT_NUM_ERROR);
+        }
+
+        if ("+".equals(operator)) {
+            number++;
+        } else {
+            number--;
+        }
+        number = number < 0 ? 0 : number;
+        //Integer number = cart.getNum() + 1;
+        Date now = new Date();
+        Cart newCart = new Cart();
+        newCart.setCid(cid);
+        newCart.setNum(number);
+        newCart.setModifiedUser(username);
+        newCart.setModifiedTime(now);
+        Integer rows = cartMapper.updateCartByCid(newCart);
+        if (rows != 1) {
+            throw new ServiceException(ExceptionResponseCode.CART_UPATE_ERROR);
+        }
+        return number;
+    }
+
+    @Override
+    public void deleteCartByCid(Integer cid) {
+        Integer row = cartMapper.deleteCartByCid(cid);
+        if (row != 1) {
+            throw new ServiceException(ExceptionResponseCode.CART_DELETE_ERROR);
+        }
+    }
+
+    @Override
+    public List<CartVo> findCartVoByCids(Integer uid, Integer[] cids) {
+        List<CartVo> list = cartMapper.findCartVoByCids(cids);
+        List<CartVo> result = null;
+        if (!ObjectUtils.isEmpty(list)) {
+            result = list.stream().filter(cartVo -> cartVo.getUid() != uid).collect(Collectors.toList());
+        }
+        return result;
     }
 
 }
