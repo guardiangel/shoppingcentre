@@ -1,6 +1,13 @@
-html + css + jquery + jpa + mybatis + mysql
+This demo project involves in following skills:
+1.sprintboot
+2.html
+3.css
+4.jquery
+5.mybatis
+6.mysql
 
-1. When share the project to gitHub, there is the exception:
+1. 2022-05-06 share project to github
+When share the project to gitHub, there is the exception:
     git@github.com: Permission denied (publickey)
     1.1 open git bash, run command to verify username and email:
     $ git config --global --list
@@ -32,3 +39,13 @@ html + css + jquery + jpa + mybatis + mysql
 
 5.2022-05-10
 5.1 Use postman to test webservice, refer to Develop_webservice_with_springboot.pdf
+5.2 Change password use JPA
+5.3 Add Interceptor
+5.4 Optimize code when update password
+
+6.2022-05-11
+6.1 Adjust webservice, get data from database
+6.2 Create password.html, adjust code logic
+
+7.2022-05-12
+7.1 Modify user info
