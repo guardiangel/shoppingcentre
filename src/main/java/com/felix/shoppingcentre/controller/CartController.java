@@ -104,4 +104,13 @@ public class CartController extends BaseController {
         }
         return result;
     }
+
+    @PostMapping("/list")
+    public JsonResult<List<CartVo>> findCartVoByCids(Integer[] cids, HttpSession session) {
+        JsonResult<List<CartVo>> result = new JsonResult<>(ConstantUtils.SUCCESS);
+        Integer uid = getUidFromSession(session);
+        List<CartVo> data = cartService.findCartVoByCids(uid, cids);
+        result.setData(data);
+        return result;
+    }
 }

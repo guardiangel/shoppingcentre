@@ -80,12 +80,12 @@
             </div>
 
             <div class="panel-body">
-                <form action="" role="form">
+                <form action="orderConfirmation.html" role="form">
                     <table class="cart-table">
                         <thead>
                         <tr>
                             <th style="width: 8%">
-                                <input type="checkbox" class="ckall" onclick="checkAll(this)">selectAll
+                                <input type="checkbox" class="ckall" onclick="toggle(this)">selectAll
                             </th>
                             <th></th>
                             <th style="width: 29%">product</th>
@@ -247,7 +247,7 @@
                 let list = json.data;
                 for (let i = 0; i < list.length; i++) {
                     let tr = '<tr>' + '<td>'
-                        + '<input name="cids" value="#{cid}" type="checkbox" class="ckitem" />'
+                        + '<input name="cids" value="#{cid}" type="checkbox" class="ckitem"/>'
                         + '</td>' + '<td><img src="..#{image}collect.png" class="img-responsive" /></td>'
                         + '<td>#{title}#{msg}</td>' + '<td>¥<span id="price-#{cid}">#{realPrice}</span></td>'
                         + '<td>' + '<input type="button" value="-" class="num-btn" onclick="adjustCartNum(#{cid}, this.value)" />'
@@ -272,6 +272,13 @@
                 }
             }
         });
+    }
+
+    function toggle(source) {
+        let checkboxes = document.getElementsByName("cids");
+        for (let i = 0, n = checkboxes.length; i < n; i++) {
+            checkboxes[i].checked = source.checked;
+        }
     }
 </script>
 

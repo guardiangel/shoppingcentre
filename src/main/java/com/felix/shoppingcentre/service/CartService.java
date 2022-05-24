@@ -107,7 +107,7 @@ public class CartService implements ICartService {
         List<CartVo> result = null;
         if (!ObjectUtils.isEmpty(list)) {
             result = list.stream().
-                    filter(cartVo -> !cartVo.getUid().equals(uid)).collect(Collectors.toList());
+                    filter(cartVo -> cartVo.getUid().equals(uid)).collect(Collectors.toList());
         }
         return result;
     }
