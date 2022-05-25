@@ -141,7 +141,7 @@
 
                 <div class="pay-bar">
                     <a href="cart.html">return to cart</a>
-                    <span class="pull-right"><input id="btn-create-order" type="button" value="payment online"
+                    <span class="pull-right"><input id="createOrderButton" type="button" value="payment online"
                                                     class="btn btn-primary btn-lg link-pay"/></span>
                 </div>
             </form>
@@ -188,6 +188,29 @@
     $(document).ready(function () {
         displayCartList();
         displayAddressList();
+
+    });
+    $("#createOrderButton").click(function () {
+        console.log("createOrderButton");
+
+        $.ajax({
+            url:"/orders/createOrder",
+            data: $("#createOrderForm").serialize(),
+            type: "POST",
+            dataType: "JSON",
+            success: function (res) {
+                if (res.state == 200) {
+                    alert("create order success");
+                    console.log(res.data);
+                } else {
+                    alert("create order failed:" + res.message());
+                }
+            },
+            error: function (err) {
+                alert("login info expires, please login again, response code is :", err.status);
+                location.href = "login.html";
+            }
+        })
     });
 
     function displayAddressList() {
@@ -199,7 +222,6 @@
             success: function (json) {
                 let list = json.data;
                 for (let i = 0; i < list.length; i++) {
-                    console.log(list[i].name);
                     let opt = '<option value="#{aid}">#{name} | #{tag} | #{province}#{city}#{area}#{address} | #{phone}</option>';
                     opt = opt.replace(/#{aid}/g, list[i].aid);
                     opt = opt.replace(/#{tag}/g, list[i].tag);
@@ -224,7 +246,6 @@
             dataType: "JSON",
             success: function (res) {
                 let data = res.data;
-                console.log(data);
                 let allAmount = 0;
                 let allPrice = 0;
                 for (let i = 0; i < data.length; i++) {

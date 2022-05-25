@@ -106,4 +106,26 @@ public class AddressService implements IAddressService {
             throw new ServiceException(ExceptionResponseCode.ADDRESS_SETUP_DEFAULT);
         }
     }
+
+    @Override
+    public Address getAddressByAid(Integer aid, Integer uid) {
+
+        Address address = addressMapper.findAddressByAid(aid);
+        if (ObjectUtils.isEmpty(address)) {
+            throw new ServiceException(ExceptionResponseCode.ADDRESS_NOT_FOUND);
+        }
+        if (!uid.equals(address.getUid())) {
+            throw new ServiceException(ExceptionResponseCode.ADDRESS_ACCESS_DENIED);
+        }
+        address.setProvinceCode(null);
+        address.setCityCode(null);
+        address.setAreaCode(null);
+        address.setCreatedUser(null);
+        address.setCreatedTime(null);
+        address.setModifiedUser(null);
+        address.setModifiedTime(null);
+
+        return address;
+    }
+
 }

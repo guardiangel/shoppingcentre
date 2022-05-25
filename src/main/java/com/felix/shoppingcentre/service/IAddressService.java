@@ -41,4 +41,13 @@ public interface IAddressService {
      */
     void deleteAddress(Integer aid, Integer uid, String username);
 
+    /**
+     * find address according to aid
+     *
+     * @param aid primary key
+     * @param uid user id
+     * @return address object
+     */
+    Address getAddressByAid(Integer aid, Integer uid);
+
 }
