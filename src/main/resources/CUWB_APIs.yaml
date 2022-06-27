@@ -1,0 +1,326 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Radian CUWB  API
+  description: Open API Specifications for Radian's CUWB
+  contact:
+    email: cuwb_admin@radian.com
+  license:
+    name: cuwb-api-0.0.1
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+host: www.radian.com
+basePath: /cuwb/rs/v1
+tags:
+  - name: Invoice
+    description: Invoice Operations
+schemes:
+  - https
+  - http
+paths:
+  /Invoice/getInvoiceByNumber:
+    get:
+      tags:
+        - Invoice
+      summary: Get Invoices by Search Criteria
+      description: getInvoiceByNumber
+      operationId: getInvoiceByNumber
+      produces:
+      - "application/json"
+      parameters:
+      - name: requestId
+        format: uuid
+        pattern: '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
+        in: header
+        description: Request Id
+        required: true
+        type: string
+      - name: authToken
+        in: header
+        description: Autorization Token
+        required: false
+        type: string
+      - name: timeStamp
+        in: header
+        description: Time date Unix Format
+        required: true
+        type: integer
+      - name: body
+        in: body
+        description: Auth object
+        required: true
+        schema:
+            $ref: '#/definitions/InvoiceSearch'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Invoice'
+        '400':
+          description: Invalid  Data
+          schema:
+            $ref: '#/definitions/Response'
+  /Invoice/getInvoiceByPymtItem:
+    get:
+      tags:
+        - Invoice
+      summary: Get Invoices by Payment Item
+      description: getInvoiceByPymtItem
+      operationId: getInvoiceByPymtItem
+      produces:
+      - "application/json"
+      parameters:
+      - name: requestId
+        format: uuid
+        pattern: '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
+        in: header
+        description: Request Id
+        required: true
+        type: string
+      - name: authToken
+        in: header
+        description: Autorization Token
+        required: false
+        type: string
+      - name: timeStamp
+        in: header
+        description: Time date Unix Format
+        required: true
+        type: integer
+      - name: body
+        in: body
+        description: Auth object
+        required: true
+        schema:
+            $ref: '#/definitions/InvoiceSearchByPymtReq'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/InvoiceSearchByPymtResult'
+        '400':
+          description: Invalid  Data
+          schema:
+            $ref: '#/definitions/Response'
+definitions:
+ 
+  InvoiceSearch:
+    type: object
+    required:
+    - searchBy
+    properties:
+      finalizedInd:
+        type: string
+        description: Finalized Indicator
+      CUWInvoiceNumber:
+        type: string
+        description: Invoice Number
+      customerName:
+        type: string
+        description: Customer Name
+      billToName: 
+        type: string
+        description: Bill To Nam
+      billingProfileDisplayID:
+        type: string
+        description: Billing Profile Display Id
+      invoiceEndDate:
+        type: string
+        description: Invoice end Date
+      invoiceBeginDate: 
+        type: string
+        description: Invoice Start Date
+      invoiceAmountHigh:
+        type: number
+        description: Amount High Value
+      invoiceAmountLow:
+        type: number
+        description: Amount Low Value start Date       
+  Response:
+    type: object
+    properties:
+      requestId:
+        type: number
+        format: uuid
+        pattern: '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
+      status:
+        type: string
+        description: Possible Values 'SUCCESS' or 'FAIL'
+      statusCode:
+        type: string
+        description: 0 for Success and Non Zero for failure
+      description:
+        type: string      
+  Invoice:
+    type: object
+    properties:
+      BILL_PROF_NUM:
+        type: string
+      INVOICE_ID:
+        type: number
+      INVOICE_NUM:
+        type: string
+      INVOICE_DT:
+        type: string
+      INVOICE_STATUS_CD_ID:
+        type: number
+      INVOICE_REVISION_STATUS_CD_ID:
+        type: number
+      TOTAL_INVOICE_AMT:
+        type: number
+      TOTAL_ADJ_AMT:
+        type: number
+      TOTAL_PAYMENT_AMT:
+        type: number
+      CREATION_USER_NAM:
+        type: string
+      START_DT:
+        type: string
+      END_DT:
+        type: string
+      INCL_DETAIL_ON_BILL_IND:
+        type: number
+      INVOICE_DELIVERY_METHOD_CD:
+        type: string
+      CUSTOMER_NUM:
+        type: string
+      CUSTOMER_NAM:
+        type: string
+      BILL_TO_INVOICE_NAME:
+        type: string
+      ATTENTION_NAME:
+        type: string
+      CITY:
+        type: string
+      STATE_CD_ID:
+        type: string
+      STREET_ADRESS1:
+        type: string
+      STREET_ADRESS2:
+        type: string
+      STREET_ADRESS3:
+        type: string
+      POSTAL_CD:
+        type: string
+      POSTAL_CD_PLUS4:
+        type: string
+      PRELOADED_IND:
+        type: number
+      TRANS_INCL_DETAIL_ON_BILL_IND:
+        type: number
+      FINALIZED_IND:
+        type: number
+  InvoiceSearchByPymtReq:
+    type: object
+    properties:
+      checkReferenceNumberFlag:
+        type: string
+        description: Check Reference Number Flag
+      checkReferenceNumber:
+        type: string
+        description: Check Reference Number
+      depositIDFlag:
+        type: string
+        description: Deposit I D Flag
+      depositID:
+        type: string
+        description: Deposit I D
+      billingProfileDisplayIDFlag:
+        type: string
+        description: Billing Profile Display I D Flag
+      billingProfileDisplayID:
+        type: string
+        description: Billing Profile Display I D
+      depositBeginDateFlag:
+        type: string
+        description: Deposit Begin Date Flag
+      depositBeginDate:
+        type: string
+        description: Deposit Begin Date
+      depositEndDateFlag:
+        type: string
+        description: Deposit End Date Flag
+      depositEndDate:
+        type: string
+        description: Deposit End Date
+      transactionBeginDateFlag:
+        type: string
+        description: Transaction Begin Date Flag
+      transactionBeginDate:
+        type: string
+        description: Transaction Begin Date
+      transactionEndDateFlag:
+        type: string
+        description: Transaction End Date Flag
+      transactionEndDate:
+        type: string
+        description: Transaction End Date
+      paymentAmountLowFlag:
+        type: string
+        description: Payment Amount Low Flag
+      paymentAmountLow:
+        type: string
+        description: Payment Amount Low
+      paymentAmountHighFlag:
+        type: string
+        description: Payment Amount High Flag
+      paymentAmountHigh:
+        type: string
+        description: Payment Amount High
+        
+  InvoiceSearchByPymtResult:
+    type: object
+    properties:
+      AR_INBOUND_TRX_ID:
+        type: string
+        description: AR inbound Transaction Id
+      INVOICE_ID:
+        type: string
+        description: Invoice Id
+      AR_INBOUND_TRANS_TYPE_CD_ID:
+        type: string
+        description: Transaction Type Code Id
+      TRANS_DT:
+        type: string
+        description: Transaction Date
+      DEPOSIT_DT:
+        type: string
+        description: Deposit Date
+      DEPOSIT_IDENTIFIER:
+        type: string
+        description: Deposit Identifier
+      REFERENCE_NUM:
+        type: string
+        description: Reference Number
+      TRANS_AMT:
+        type: string
+        description: Transaction Amount
+      BILL_TO_INVOICE_NAME:
+        type: string
+        description:  Invoice Name
+      BILL_PROF_NUM:
+        type: string
+        description: Bill prof Number
+      CREATED_BY:
+        type: string
+        description: Created By
+      APPLIED_TO:
+        type: string
+        description: Applied To
+      CREATION_USER_NAM:
+        type: string
+        description: Created User name
+      CREATION_DT:
+        type: string
+        description: Creation Date
+      LAST_UPDATE_USER_NAM:
+        type: string
+        description: Last Update User Name
+      LAST_UPDATE_DT:
+        type: string
+        description: Last Update Date
+        
+    
